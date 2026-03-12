@@ -1,380 +1,233 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>KAYAPALAT | Makeover Allover</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-<style>
-
-body{
-margin:0;
-font-family:Inter;
-background:#F8F6F2;
-color:#111;
-}
-
-/* NAVBAR */
-
-header{
-position:fixed;
-width:100%;
-background:white;
-box-shadow:0 2px 10px rgba(0,0,0,0.1);
-z-index:1000;
-}
-
-.nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 40px;
-}
-
-.logo{
-font-family:"Playfair Display";
-font-size:28px;
-letter-spacing:4px;
-}
-
-nav a{
-margin:0 15px;
-text-decoration:none;
-color:black;
-font-size:14px;
-}
-
-.icons{
-display:flex;
-align-items:center;
-gap:20px;
-}
-
-#cartCount{
-background:black;
-color:white;
-padding:4px 8px;
-border-radius:20px;
-font-size:12px;
-}
-
-/* HERO */
-
-.hero{
-height:100vh;
-background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000") center/cover;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
-
-.hero h1{
-font-size:80px;
-font-family:"Playfair Display";
-letter-spacing:6px;
-}
-
-.hero p{
-font-size:20px;
-margin-top:-10px;
-}
-
-.btn{
-padding:12px 30px;
-border:1px solid black;
-background:none;
-margin:10px;
-cursor:pointer;
-}
-
-/* PRODUCTS */
-
-.featured{
-padding:120px 40px;
-text-align:center;
-}
-
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
-margin-top:40px;
-}
-
-.card{
-background:white;
-padding:20px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
-transition:0.3s;
-opacity:0;
-transform:translateY(50px);
-}
-
-.card:hover{
-transform:translateY(-10px);
-}
-
-.card img{
-width:100%;
-height:250px;
-object-fit:cover;
-}
-
-.addCart{
-margin-top:10px;
-padding:10px;
-border:none;
-background:black;
-color:white;
-cursor:pointer;
-width:100%;
-}
-
-/* VAULT */
-
-.vault{
-background:black;
-color:white;
-text-align:center;
-padding:120px 20px;
-}
-
-.vaultBtn{
-padding:15px 40px;
-border:1px solid gold;
-background:none;
-color:gold;
-cursor:pointer;
-}
-
-/* FOOTER */
-
-footer{
-background:#eee;
-padding:60px 40px;
-}
-
-.footer{
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-}
-
-footer a{
-display:block;
-text-decoration:none;
-color:#444;
-margin:5px 0;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-nav{
-display:none;
-}
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayapalat | Makeover Allover</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-ivory: #F8F6F2;
+            --text-black: #111111;
+            --accent-gold: #C6A75E;
+            --accent-olive: #6E7051;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-ivory);
+            color: var(--text-black);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 400; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
+        
+        /* Navigation */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 2rem 5%;
+            background-color: transparent; transition: all 0.4s ease; z-index: 1000;
+        }
+        header.scrolled {
+            background-color: rgba(248, 246, 242, 0.95); padding: 1rem 5%;
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-links a {
+            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;
+            margin: 0 1rem; transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--accent-gold); }
+        .logo a { font-family: var(--font-heading); font-size: 2rem; letter-spacing: 4px; }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative;
+            background: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(248, 246, 242, 0.4);
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero h1 { font-size: 5rem; letter-spacing: 6px; margin-bottom: 0.5rem; }
+        .tagline { font-family: var(--font-heading); font-size: 1.8rem; font-style: italic; margin-bottom: 0.5rem; }
+        .sub-tagline { text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 3rem; }
+        
+        /* Buttons */
+        .btn-outline {
+            display: inline-block; padding: 1rem 2.5rem; border: 1px solid var(--text-black);
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;
+            margin: 0 1rem; transition: all 0.4s ease; background: transparent; cursor: pointer;
+        }
+        .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+        
+        /* Editorial & Grid */
+        .editorial-block { padding: 8rem 0; text-align: center; }
+        .section-title { font-size: 2.5rem; margin-bottom: 2rem; }
+        .editorial-text { max-width: 700px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8; color: #444; }
+        
+        .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding-bottom: 8rem; }
+        .grid-item { overflow: hidden; position: relative; }
+        .grid-item img { width: 100%; height: 80vh; object-fit: cover; transition: transform 0.8s ease; }
+        .grid-item:hover img { transform: scale(1.05); }
+        .grid-content { padding-top: 1.5rem; text-align: center; }
+        .grid-content h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .link-minimal {
+            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;
+            border-bottom: 1px solid var(--text-black); padding-bottom: 3px; transition: all 0.3s ease;
+        }
+        .link-minimal:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
+        
+        /* Antique Vault */
+        .antique-vault { background-color: var(--text-black); color: var(--bg-ivory); padding: 8rem 0; text-align: center; }
+        .antique-vault h2 { font-size: 3rem; color: var(--accent-gold); margin-bottom: 1.5rem; }
+        .antique-vault p { max-width: 600px; margin: 0 auto 3rem auto; font-size: 1.1rem; line-height: 1.6; }
+        .vault-btn { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .vault-btn:hover { background-color: var(--accent-gold); color: var(--text-black); }
+        
+        /* Footer */
+        footer { padding: 6rem 5% 2rem; border-top: 1px solid rgba(17, 17, 17, 0.1); }
+        .footer-container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 3rem; margin-bottom: 4rem; }
+        .footer-brand h2 { font-size: 2rem; letter-spacing: 3px; }
+        .footer-links { display: flex; gap: 4rem; }
+        .link-column h4 { text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 1.5rem; font-family: var(--font-body); }
+        .link-column a { display: block; margin-bottom: 0.8rem; font-size: 0.9rem; color: #555; transition: color 0.3s; }
+        .link-column a:hover { color: var(--accent-gold); }
+        .footer-newsletter input {
+            background: transparent; border: none; border-bottom: 1px solid var(--text-black);
+            padding: 0.5rem 0; font-family: var(--font-body); width: 200px; outline: none;
+        }
+        .footer-newsletter button {
+            background: transparent; border: none; text-transform: uppercase; font-family: var(--font-body);
+            letter-spacing: 1px; font-size: 0.8rem; margin-left: 1rem; cursor: pointer; font-weight: bold;
+        }
+        .footer-bottom { text-align: center; font-size: 0.8rem; color: #888; }
+        
+        /* Mobile Settings */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .featured-grid { grid-template-columns: 1fr; }
+            .footer-container { flex-direction: column; }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-
-<div class="nav">
-
-<div class="logo">KAYAPALAT</div>
-
-<nav>
-<a href="#">Women</a>
-<a href="#">Home Decor</a>
-<a href="#">Story</a>
-</nav>
-
-<div class="icons">
-Cart <span id="cartCount">0</span>
-</div>
-
-</div>
-
-</header>
-
-
-<section class="hero">
-
-<div>
-
-<h1>KAYAPALAT</h1>
-
-<p>Makeover Allover</p>
-
-<button class="btn">Shop Women</button>
-<button class="btn">Shop Home</button>
-
-</div>
-
-</section>
-
-
-<section class="featured">
-
-<h2>Featured Collection</h2>
-
-<div class="products">
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1520975922323-7b73b6b0b5d5?q=80&w=800">
-
-<h3>Silk Kurta</h3>
-
-<p>$120</p>
-
-<button class="addCart">Add To Cart</button>
-
-</div>
-
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1505692794403-34d4982f88aa?q=80&w=800">
-
-<h3>Luxury Cushion</h3>
-
-<p>$60</p>
-
-<button class="addCart">Add To Cart</button>
-
-</div>
-
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1495121605193-b116b5b09a96?q=80&w=800">
-
-<h3>Designer Dress</h3>
-
-<p>$180</p>
-
-<button class="addCart">Add To Cart</button>
-
-</div>
-
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1616627451515-cbc80e5ece35?q=80&w=800">
-
-<h3>Decor Sculpture</h3>
-
-<p>$240</p>
-
-<button class="addCart">Add To Cart</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="vault">
-
-<h2>Antique Vault</h2>
-
-<p>Museum grade artifacts curated for modern collectors.</p>
-
-<button class="vaultBtn">Enter Vault</button>
-
-</section>
-
-
-<footer>
-
-<div class="footer">
-
-<div>
-
-<h3>KAYAPALAT</h3>
-
-<p>Makeover Allover</p>
-
-</div>
-
-<div>
-
-<h4>Explore</h4>
-
-<a href="#">Women</a>
-<a href="#">Decor</a>
-<a href="#">Story</a>
-
-</div>
-
-<div>
-
-<h4>Support</h4>
-
-<a href="#">Contact</a>
-<a href="#">Shipping</a>
-<a href="#">Privacy</a>
-
-</div>
-
-</div>
-
-</footer>
-
-
-<script>
-
-/* CART */
-
-let cart = 0
-
-document.querySelectorAll(".addCart").forEach(btn=>{
-
-btn.onclick=()=>{
-
-cart++
-
-document.getElementById("cartCount").innerText = cart
-
-}
-
-})
-
-
-/* SCROLL ANIMATION */
-
-const cards = document.querySelectorAll(".card")
-
-window.addEventListener("scroll",()=>{
-
-cards.forEach(card=>{
-
-const top = card.getBoundingClientRect().top
-
-if(top < window.innerHeight - 100){
-
-card.style.opacity=1
-card.style.transform="translateY(0)"
-
-}
-
-})
-
-})
-
-</script>
-
+    <header id="navbar">
+        <div class="nav-container">
+            <nav class="nav-links left-links">
+                <a href="#women">Women</a>
+                <a href="#home-decor">Home</a>
+                <a href="#story">Our Story</a>
+            </nav>
+            <div class="logo">
+                <a href="#">KAYAPALAT</a>
+            </div>
+            <nav class="nav-links right-links">
+                <a href="#search">Search</a>
+                <a href="#account">Account</a>
+                <a href="#cart">Cart (0)</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>KAYAPALAT</h1>
+            <p class="tagline">Makeover Allover</p>
+            <p class="sub-tagline">Fashion • Furnishing</p>
+            <div class="hero-buttons">
+                <a href="#women" class="btn-outline">Shop Women</a>
+                <a href="#home-decor" class="btn-outline">Shop Home</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="editorial-block">
+        <div class="container">
+            <h2 class="section-title">The Art of Transformation</h2>
+            <p class="editorial-text">Redefining personal style and living spaces. From wardrobe to walls, from self to space. A curated experience of premium slow fashion and handcrafted artifacts.</p>
+        </div>
+    </section>
+
+    <section class="featured-grid container">
+        <div class="grid-item">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop" alt="Premium Women Clothing" loading="lazy">
+            <div class="grid-content">
+                <h3>Contemporary Classics</h3>
+                <a href="#shop" class="link-minimal">Explore Collection</a>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=800&auto=format&fit=crop" alt="Luxury Home Decor" loading="lazy">
+            <div class="grid-content">
+                <h3>Statement Décor</h3>
+                <a href="#shop" class="link-minimal">Explore Living</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="antique-vault">
+        <div class="container vault-content">
+            <h2>The Antique Vault</h2>
+            <p>Museum-grade artifacts and timeless sculptures, curated for the modern connoisseur.</p>
+            <a href="#vault" class="btn-outline vault-btn">Enter The Vault</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2>KAYAPALAT</h2>
+                <p>Makeover Allover</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-column">
+                    <h4>Explore</h4>
+                    <a href="#">Women</a>
+                    <a href="#">Furnishing</a>
+                    <a href="#">Our Story</a>
+                </div>
+                <div class="link-column">
+                    <h4>Assistance</h4>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Shipping & Returns</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Join the Studio</h4>
+                <form action="#">
+                    <input type="email" placeholder="Email Address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Kayapalat Studios. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
