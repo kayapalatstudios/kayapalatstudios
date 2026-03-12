@@ -3,66 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kayapalat | Makeover Allover</title>
+<title>KAYAPALAT | Makeover Allover</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
 --bg:#F8F6F2;
 --text:#111;
 --gold:#C6A75E;
---olive:#6E7051;
 --heading:'Playfair Display',serif;
 --body:'Inter',sans-serif;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);font-family:var(--body);color:var(--text);}
-a{text-decoration:none;color:inherit;}
-h1,h2,h3{font-family:var(--heading);font-weight:400;}
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+background:var(--bg);
+font-family:var(--body);
+color:var(--text);
+}
+
+/* NAVBAR */
 
 header{
 position:fixed;
 top:0;
 width:100%;
-padding:2rem 5%;
-transition:.4s;
-z-index:1000;
-}
-
-header.scrolled{
 background:rgba(248,246,242,.95);
 backdrop-filter:blur(10px);
-padding:1rem 5%;
-border-bottom:1px solid #eee;
-}
-
-.nav-container{
+padding:15px 5%;
 display:flex;
 justify-content:space-between;
 align-items:center;
+z-index:1000;
 }
 
-.nav-links a{
-margin:0 1rem;
-font-size:.8rem;
+.logo{
+font-family:var(--heading);
+font-size:26px;
+letter-spacing:4px;
+}
+
+nav a{
+margin:0 15px;
+font-size:13px;
 letter-spacing:2px;
 text-transform:uppercase;
 cursor:pointer;
 }
 
-.nav-links a:hover{color:var(--gold);}
+nav a:hover{color:var(--gold)}
 
-.logo{font-size:2rem;letter-spacing:4px;}
+.menu-btn{
+display:none;
+font-size:24px;
+cursor:pointer;
+}
+
+/* HERO */
 
 .hero{
 height:100vh;
+background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=2000&q=80") center/cover;
 display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
-background:url('https://images.unsplash.com/photo-1600607686527-6fb886090705?w=2000') center/cover;
 position:relative;
 }
 
@@ -73,45 +81,91 @@ inset:0;
 background:rgba(248,246,242,.4);
 }
 
-.hero-content{position:relative;z-index:2;}
-
-.hero h1{font-size:5rem;letter-spacing:6px;}
-.tagline{font-size:1.8rem;font-style:italic;margin:.5rem 0;}
-.sub{letter-spacing:3px;font-size:.9rem;margin-bottom:2rem;}
-
-.btn{
-padding:1rem 2.5rem;
-border:1px solid var(--text);
-background:transparent;
-text-transform:uppercase;
-letter-spacing:2px;
-font-size:.8rem;
-cursor:pointer;
-margin:.5rem;
+.hero-content{
+position:relative;
+z-index:2;
 }
 
-.btn:hover{color:var(--gold);border-color:var(--gold);}
+.hero h1{
+font-family:var(--heading);
+font-size:70px;
+letter-spacing:6px;
+}
+
+.hero p{
+font-size:18px;
+margin-top:10px;
+}
+
+.btn{
+padding:12px 30px;
+border:1px solid black;
+background:none;
+margin:15px;
+cursor:pointer;
+letter-spacing:2px;
+}
+
+.btn:hover{
+border-color:var(--gold);
+color:var(--gold);
+}
+
+/* SEARCH */
+
+.search-bar{
+max-width:600px;
+margin:40px auto;
+display:flex;
+}
+
+.search-bar input{
+flex:1;
+padding:12px;
+border:1px solid #ddd;
+}
+
+/* PRODUCTS */
 
 .section{
-padding:8rem 5%;
+padding:120px 5%;
 max-width:1300px;
 margin:auto;
-display:none;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:3rem;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
+margin-top:40px;
+}
+
+.card{
+background:white;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+cursor:pointer;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
 }
 
 .card img{
 width:100%;
-height:400px;
+height:320px;
 object-fit:cover;
 }
 
-.price{color:var(--gold);margin-top:.5rem;}
+.card-content{
+padding:15px;
+}
+
+.price{
+color:var(--gold);
+}
+
+/* MODAL */
 
 .modal{
 position:fixed;
@@ -125,41 +179,41 @@ opacity:0;
 transition:.3s;
 }
 
-.modal.active{visibility:visible;opacity:1;}
+.modal.active{
+visibility:visible;
+opacity:1;
+}
 
-.modal-content{
+.modal-box{
 background:white;
-width:90%;
-max-width:900px;
 display:flex;
 gap:40px;
+max-width:900px;
+width:90%;
 padding:30px;
-position:relative;
 }
 
-.modal img{width:50%;height:400px;object-fit:cover;}
+.modal img{
+width:50%;
+object-fit:cover;
+}
 
-.option-group button{
+.option button{
+padding:6px 10px;
 margin:5px;
-padding:6px 12px;
-cursor:pointer;
-border:1px solid #ccc;
+border:1px solid #ddd;
 background:white;
+cursor:pointer;
 }
 
-.option-group button.selected{
+.option button.active{
 background:black;
 color:white;
 }
 
-.close{
-position:absolute;
-top:15px;
-right:20px;
-cursor:pointer;
-}
+/* CART */
 
-.cart-drawer{
+.cart{
 position:fixed;
 right:-350px;
 top:0;
@@ -168,238 +222,279 @@ height:100%;
 background:white;
 padding:20px;
 transition:.3s;
-overflow-y:auto;
+overflow:auto;
 }
 
-.cart-drawer.active{right:0;}
+.cart.active{right:0}
 
-.cart-item{border-bottom:1px solid #eee;padding:10px 0;}
+.cart-item{
+border-bottom:1px solid #eee;
+padding:10px 0;
+}
 
-.qty-btn{padding:2px 6px;margin:0 5px;cursor:pointer;}
+/* MOBILE */
 
 @media(max-width:768px){
-.modal-content{flex-direction:column;}
-.modal img{width:100%;}
+
+.hero h1{font-size:40px}
+
+nav{
+display:none;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+background:white;
+flex-direction:column;
+padding:20px;
 }
+
+nav.active{display:flex}
+
+.menu-btn{display:block}
+
+.modal-box{
+flex-direction:column;
+}
+
+.modal img{
+width:100%;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<header id="navbar">
-<div class="nav-container">
-<div class="nav-links">
-<a onclick="showHome()">Home</a>
-<a onclick="showFashion()">Fashion</a>
-<a onclick="showDecor()">Home Decor</a>
-</div>
+<header>
+
 <div class="logo">KAYAPALAT</div>
-<div class="nav-links">
-<a onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</a>
-</div>
-</div>
+
+<nav id="navMenu">
+<a onclick="showAll()">Shop</a>
+<a onclick="filterCategory('fashion')">Fashion</a>
+<a onclick="filterCategory('decor')">Decor</a>
+<a onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a>
+</nav>
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
 </header>
 
-<section class="hero" id="home">
+<section class="hero">
 <div class="hero-content">
 <h1>KAYAPALAT</h1>
-<p class="tagline">Makeover Allover</p>
-<p class="sub">Fashion • Furnishing</p>
-<button class="btn" onclick="showFashion()">Shop Fashion</button>
-<button class="btn" onclick="showDecor()">Shop Home</button>
+<p>Makeover Allover</p>
+<button class="btn" onclick="scrollShop()">Shop Collection</button>
 </div>
 </section>
 
-<section class="section" id="fashion">
-<h2>Fashion Collection</h2>
-<div class="grid">
-
-<div class="card" onclick="openProduct('Classic Dress',12000,'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800','Fashion')">
-<img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800">
-<h3>Classic Dress</h3>
-<p class="price">₹12000</p>
+<div class="search-bar">
+<input type="text" placeholder="Search products..." onkeyup="searchProducts(this.value)">
 </div>
 
-</div>
+<section class="section" id="shop">
+
+<div class="grid" id="productGrid"></div>
+
 </section>
 
-<section class="section" id="decor">
-<h2>Home Decor</h2>
-<div class="grid">
-
-<div class="card" onclick="openProduct('Minimalist Vase',8400,'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800','Decor')">
-<img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800">
-<h3>Minimalist Vase</h3>
-<p class="price">₹8400</p>
-</div>
-
-</div>
-</section>
+<!-- PRODUCT MODAL -->
 
 <div class="modal" id="productModal">
-<div class="modal-content">
-<span class="close" onclick="closeProduct()">✕</span>
-<img id="pImage">
-<div>
-<h2 id="pName"></h2>
-<h3 id="pPrice" class="price"></h3>
 
-<div class="option-group" id="sizeBox">
-<h4>Select Size</h4>
-<button class="selected" onclick="selectSize(this)">M</button>
-<button onclick="selectSize(this)">L</button>
-<button onclick="selectSize(this)">XL</button>
+<div class="modal-box">
+
+<img id="pImg">
+
+<div>
+
+<h2 id="pName"></h2>
+<h3 class="price" id="pPrice"></h3>
+
+<div class="option">
+<p>Size</p>
+<button class="size active">M</button>
+<button class="size">L</button>
+<button class="size">XL</button>
 </div>
 
-<div class="option-group">
-<h4>Select Color</h4>
-<button class="selected" onclick="selectColor(this)">Black</button>
-<button onclick="selectColor(this)">White</button>
+<div class="option">
+<p>Color</p>
+<button class="color active">Black</button>
+<button class="color">White</button>
 </div>
 
 <button class="btn" onclick="addToCart()">Add To Cart</button>
-</div>
-</div>
+
 </div>
 
-<div class="cart-drawer" id="cartDrawer">
+</div>
+
+</div>
+
+<!-- CART -->
+
+<div class="cart" id="cartBox">
 <h2>Your Cart</h2>
 <div id="cartItems"></div>
 <h3 id="cartTotal"></h3>
 </div>
 
 <script>
-const home=document.getElementById("home");
-const fashion=document.getElementById("fashion");
-const decor=document.getElementById("decor");
 
-let currentProduct=null;
-let selectedSize="M";
-let selectedColor="Black";
+/* PRODUCTS DATABASE */
 
-function showHome(){
-home.style.display="flex";
-fashion.style.display="none";
-decor.style.display="none";
+const products=[
+{name:"Classic Dress",price:12000,img:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800",cat:"fashion"},
+{name:"Silk Kurta",price:9500,img:"https://images.unsplash.com/photo-1520975922323-7b73b6b0b5d5?w=800",cat:"fashion"},
+{name:"Minimal Vase",price:8400,img:"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800",cat:"decor"},
+{name:"Stone Sculpture",price:14000,img:"https://images.unsplash.com/photo-1616627451515-cbc80e5ece35?w=800",cat:"decor"}
+]
+
+const grid=document.getElementById("productGrid")
+
+function loadProducts(list){
+
+grid.innerHTML=""
+
+list.forEach(p=>{
+
+grid.innerHTML+=`
+<div class="card" onclick="openProduct('${p.name}',${p.price},'${p.img}')">
+<img src="${p.img}">
+<div class="card-content">
+<h3>${p.name}</h3>
+<p class="price">₹${p.price}</p>
+</div>
+</div>`
+
+})
+
 }
 
-function showFashion(){
-home.style.display="none";
-fashion.style.display="block";
-decor.style.display="none";
+loadProducts(products)
+
+/* SEARCH */
+
+function searchProducts(q){
+q=q.toLowerCase()
+loadProducts(products.filter(p=>p.name.toLowerCase().includes(q)))
 }
 
-function showDecor(){
-home.style.display="none";
-fashion.style.display="none";
-decor.style.display="block";
+/* FILTER */
+
+function filterCategory(cat){
+loadProducts(products.filter(p=>p.cat===cat))
 }
 
-function openProduct(name,price,image,category){
-currentProduct={name,price,image,category};
-document.getElementById("pName").innerText=name;
-document.getElementById("pPrice").innerText="₹"+price;
-document.getElementById("pImage").src=image;
-
-if(category==="Decor"){
-document.getElementById("sizeBox").style.display="none";
-selectedSize="Standard";
-}else{
-document.getElementById("sizeBox").style.display="block";
+function showAll(){
+loadProducts(products)
 }
 
-document.getElementById("productModal").classList.add("active");
+/* MODAL */
+
+let currentProduct=null
+
+function openProduct(name,price,img){
+
+currentProduct={name,price,img}
+
+document.getElementById("pName").innerText=name
+document.getElementById("pPrice").innerText="₹"+price
+document.getElementById("pImg").src=img
+
+document.getElementById("productModal").classList.add("active")
+
 }
 
-function closeProduct(){
-document.getElementById("productModal").classList.remove("active");
+document.getElementById("productModal").onclick=e=>{
+if(e.target.id==="productModal")
+document.getElementById("productModal").classList.remove("active")
 }
 
-function selectSize(btn){
-document.querySelectorAll("#sizeBox button").forEach(b=>b.classList.remove("selected"));
-btn.classList.add("selected");
-selectedSize=btn.innerText;
-}
-
-function selectColor(btn){
-document.querySelectorAll(".option-group:nth-child(3) button").forEach(b=>b.classList.remove("selected"));
-btn.classList.add("selected");
-selectedColor=btn.innerText;
-}
+/* CART */
 
 function getCart(){
-return JSON.parse(localStorage.getItem("kpCart"))||[];
+return JSON.parse(localStorage.getItem("kpCart"))||[]
 }
 
-function saveCart(cart){
-localStorage.setItem("kpCart",JSON.stringify(cart));
-updateCart();
+function saveCart(c){
+localStorage.setItem("kpCart",JSON.stringify(c))
+updateCart()
 }
 
 function addToCart(){
-let cart=getCart();
-let existing=cart.find(item=>item.name===currentProduct.name && item.size===selectedSize && item.color===selectedColor);
 
-if(existing){existing.qty+=1;}
-else{cart.push({...currentProduct,size:selectedSize,color:selectedColor,qty:1});}
+let cart=getCart()
 
-saveCart(cart);
-closeProduct();
-toggleCart();
+let existing=cart.find(i=>i.name===currentProduct.name)
+
+if(existing) existing.qty++
+else cart.push({...currentProduct,qty:1})
+
+saveCart(cart)
+
+toggleCart()
+
 }
 
-function updateCart(){
-let cart=getCart();
-let items=document.getElementById("cartItems");
-items.innerHTML="";
-let total=0,count=0;
+/* UPDATE CART */
 
-cart.forEach((item,i)=>{
-total+=item.price*item.qty;
-count+=item.qty;
+function updateCart(){
+
+let cart=getCart()
+
+let items=document.getElementById("cartItems")
+
+items.innerHTML=""
+
+let total=0
+let count=0
+
+cart.forEach((i,index)=>{
+
+total+=i.price*i.qty
+count+=i.qty
 
 items.innerHTML+=`
 <div class="cart-item">
-<p>${item.name}</p>
-<p>${item.size} | ${item.color}</p>
-<p>
-<button class="qty-btn" onclick="changeQty(${i},-1)">-</button>
-${item.qty}
-<button class="qty-btn" onclick="changeQty(${i},1)">+</button>
-</p>
-<p>₹${item.price*item.qty}</p>
-<button onclick="removeItem(${i})">Remove</button>
-</div>`;
-});
+<p>${i.name}</p>
+<p>${i.qty} x ₹${i.price}</p>
+<button onclick="removeItem(${index})">Remove</button>
+</div>`
 
-document.getElementById("cartTotal").innerText="Total: ₹"+total;
-document.getElementById("cart-count").innerText=count;
-}
+})
 
-function changeQty(i,c){
-let cart=getCart();
-cart[i].qty+=c;
-if(cart[i].qty<=0) cart.splice(i,1);
-saveCart(cart);
+document.getElementById("cartTotal").innerText="Total: ₹"+total
+document.getElementById("cartCount").innerText=count
+
 }
 
 function removeItem(i){
-let cart=getCart();
-cart.splice(i,1);
-saveCart(cart);
+let cart=getCart()
+cart.splice(i,1)
+saveCart(cart)
 }
+
+/* UI */
 
 function toggleCart(){
-document.getElementById("cartDrawer").classList.toggle("active");
+document.getElementById("cartBox").classList.toggle("active")
 }
 
-window.addEventListener('scroll',()=>{
-if(window.scrollY>50) document.getElementById("navbar").classList.add("scrolled");
-else document.getElementById("navbar").classList.remove("scrolled");
-});
+function toggleMenu(){
+document.getElementById("navMenu").classList.toggle("active")
+}
 
-showHome();
-updateCart();
+function scrollShop(){
+document.getElementById("shop").scrollIntoView({behavior:"smooth"})
+}
+
+updateCart()
+
 </script>
 
 </body>
