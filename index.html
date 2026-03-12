@@ -1,322 +1,737 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAYAPALAT | Premium Fashion & Decor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #C6A75E;
+            --bg-color: #F8F6F2;
+            --text-light: #666;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-<title>Kayapalat</title>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+        /* --- Header & Navigation --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #eaeaea;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-<style>
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            cursor: pointer;
+        }
 
-body{
-margin:0;
-font-family:Poppins;
-background:white;
-}
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
 
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 20px;
-background:white;
-position:sticky;
-top:0;
-z-index:100;
-}
+        nav a {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-color);
+            transition: var(--transition);
+            position: relative;
+        }
 
-.logo{
-font-family:Playfair Display;
-font-size:22px;
-letter-spacing:5px;
-}
+        nav a:hover, nav a.active-link {
+            color: var(--accent-color);
+        }
 
-.menu-icon,.cart-icon{
-font-size:22px;
-cursor:pointer;
-}
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
 
-.mobileMenu{
-position:fixed;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background:white;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-gap:35px;
-font-size:22px;
-letter-spacing:3px;
-transition:.4s;
-z-index:1000;
-}
+        .cart-icon:hover {
+            background: var(--accent-color);
+            color: var(--white);
+        }
 
-.mobileMenu.active{
-left:0;
-}
+        /* Mobile Menu */
+        .hamburger { display: none; cursor: pointer; font-size: 24px; }
 
-.hero{
-height:90vh;
-background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?w=2000") center/cover;
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-text-align:center;
-color:white;
-}
+        /* --- Hero Section --- */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("https://images.unsplash.com/photo-1600607686527-6fb886090705?w=2000") center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+            padding: 0 20px;
+        }
 
-.hero::before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.45);
-}
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 72px);
+            letter-spacing: 8px;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
 
-.hero h1{
-position:relative;
-font-size:55px;
-letter-spacing:8px;
-font-family:Playfair Display;
-margin:0;
-}
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
 
-.hero p{
-position:relative;
-margin-top:10px;
-font-size:18px;
-opacity:.9;
-}
+        .btn {
+            padding: 14px 32px;
+            background: var(--white);
+            color: var(--primary-color);
+            border: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
 
-.luxury-btn{
-position:relative;
-margin-top:20px;
-padding:14px 40px;
-border:1px solid #C6A75E;
-background:transparent;
-color:white;
-letter-spacing:3px;
-font-size:13px;
-cursor:pointer;
-transition:.3s;
-}
+        .btn:hover { background: var(--accent-color); color: var(--white); }
 
-.luxury-btn:hover{
-background:#C6A75E;
-color:black;
-}
+        /* --- Pages & Grid --- */
+        .page {
+            display: none;
+            padding: 60px 6%;
+            max-width: 1400px;
+            margin: auto;
+            animation: fadeIn 0.5s ease;
+            min-height: 70vh;
+        }
 
-.page{
-display:none;
-padding:40px 20px;
-}
+        .page.active { display: block; }
 
-.page.active{
-display:block;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.products{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-}
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-.product{
-border:1px solid #eee;
-padding:10px;
-text-align:center;
-}
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            color: var(--primary-color);
+        }
 
-.product img{
-width:100%;
-}
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
 
-button{
-cursor:pointer;
-padding:8px 15px;
-margin-top:10px;
-}
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+        }
 
-.cart{
-position:fixed;
-right:-350px;
-top:0;
-width:300px;
-height:100%;
-background:white;
-box-shadow:-3px 0 10px rgba(0,0,0,.1);
-padding:20px;
-transition:.4s;
-z-index:999;
-}
+        .search-box input:focus { border-color: var(--accent-color); }
 
-.cart.active{
-right:0;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
 
-</style>
+        /* --- Product Card --- */
+        .card {
+            background: var(--white);
+            overflow: hidden;
+            position: relative;
+            group: product;
+            transition: var(--transition);
+        }
+
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
+
+        .img-container { position: relative; overflow: hidden; aspect-ratio: 3/4; }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            cursor: pointer;
+        }
+
+        .card:hover img { transform: scale(1.05); }
+
+        .wishlist {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary-color);
+            background: rgba(255,255,255,0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .wishlist:hover { color: var(--accent-color); }
+        .wishlist.active-wish { color: red; }
+
+        .card-content { padding: 20px; text-align: center; }
+
+        .card-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .price { color: var(--accent-color); font-weight: 600; margin-bottom: 15px; font-size: 16px; }
+
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .card:hover .add-btn { background: var(--primary-color); color: var(--white); }
+
+        /* --- Cart Sidebar --- */
+        .cart {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart.active { right: 0; }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-header h2 { font-family: 'Playfair Display', serif; font-size: 24px; }
+        .close-cart { cursor: pointer; font-size: 28px; }
+
+        #cartItems { flex-grow: 1; overflow-y: auto; }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .cart-item img { width: 70px; height: 90px; object-fit: cover; }
+        
+        .cart-item-details { flex-grow: 1; }
+        .cart-item-details h4 { font-size: 14px; margin-bottom: 5px; font-weight: 500; }
+        .cart-item-details p { color: var(--accent-color); font-weight: 600; font-size: 14px; }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .qty-btn {
+            background: #eee; border: none; width: 25px; height: 25px; cursor: pointer; font-size: 16px;
+        }
+
+        .remove-btn {
+            background: transparent; border: none; color: #999; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 5px;
+        }
+
+        .cart-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .checkout-btn { width: 100%; background: var(--primary-color); color: var(--white); padding: 15px; text-align: center; font-size: 16px; }
+        
+        .empty-cart { text-align: center; color: #999; margin-top: 50px; }
+
+        /* --- Overlay & Modals --- */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(3px);
+            opacity: 0; pointer-events: none; transition: var(--transition); z-index: 1000;
+        }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+
+        .popup {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+            background: var(--white); width: 90%; max-width: 800px;
+            display: flex; opacity: 0; pointer-events: none; transition: var(--transition);
+            z-index: 1002; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .popup.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+        
+        .popup-img-wrap { width: 50%; }
+        .popup-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .popup-info { width: 50%; padding: 40px; display: flex; flex-direction: column; justify-content: center; position: relative;}
+        
+        .close-popup { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; }
+
+        .popup h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 10px; }
+        .popup p { font-size: 22px; color: var(--accent-color); margin-bottom: 30px; font-weight: 600; }
+        .popup-desc { color: var(--text-light); margin-bottom: 30px; line-height: 1.6; font-size: 14px; }
+
+        /* --- Toast Notification --- */
+        #toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--primary-color); color: var(--white); padding: 12px 24px;
+            border-radius: 30px; font-size: 14px; opacity: 0; transition: all 0.4s ease;
+            z-index: 9999; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--primary-color); color: var(--white); padding: 60px 6% 30px; margin-top: 50px;
+        }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h3 { font-family: 'Playfair Display', serif; margin-bottom: 20px; font-weight: 400; letter-spacing: 2px;}
+        .footer-col p, .footer-col a { color: #aaa; font-size: 14px; text-decoration: none; display: block; margin-bottom: 10px; transition: 0.3s;}
+        .footer-col a:hover { color: var(--accent-color); }
+        .footer-bottom { text-align: center; border-top: 1px solid #333; padding-top: 20px; color: #777; font-size: 12px; }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            nav {
+                position: absolute; top: 100%; left: 0; width: 100%; background: var(--white);
+                flex-direction: column; padding: 20px 0; border-bottom: 1px solid #eee;
+                display: none; box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            }
+            nav.mobile-active { display: flex; }
+            .popup { flex-direction: column; max-height: 90vh; overflow-y: auto;}
+            .popup-img-wrap, .popup-info { width: 100%; }
+            .popup-img-wrap { height: 300px; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+            .search-box { width: 100%; max-width: 100%; }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-
-<div class="menu-icon" onclick="toggleMenu()">☰</div>
-
-<div class="logo">KAYAPALAT</div>
-
-<div class="cart-icon" onclick="toggleCart()">🛒 (<span id="cartCount">0</span>)</div>
-
-</header>
-
-<div class="mobileMenu" id="mobileMenu">
-
-<div onclick="openPage('home')">HOME</div>
-<div onclick="openPage('fashion')">FASHION</div>
-<div onclick="openPage('decor')">DECOR</div>
-<div onclick="toggleCart()">CART</div>
-
-</div>
-
-
-<!-- HOME -->
-
-<div id="home" class="page active">
-
-<div class="hero">
-
-<h1>KAYAPALAT</h1>
-<p>Makeover Allover</p>
-
-<button class="luxury-btn" onclick="openPage('fashion')">
-SHOP FASHION
-</button>
-
-</div>
-
-</div>
-
-
-<!-- FASHION -->
-
-<div id="fashion" class="page">
-
-<h2>Fashion Collection</h2>
-
-<div class="products">
-
-<div class="product">
-<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
-<p>Classic Shirt</p>
-<button onclick="addToCart('Classic Shirt')">Add to Cart</button>
-</div>
-
-<div class="product">
-<img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f">
-<p>Luxury Jacket</p>
-<button onclick="addToCart('Luxury Jacket')">Add to Cart</button>
-</div>
-
-</div>
-
-</div>
-
-
-<!-- DECOR -->
-
-<div id="decor" class="page">
-
-<h2>Decor Collection</h2>
-
-<div class="products">
-
-<div class="product">
-<img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85">
-<p>Modern Lamp</p>
-<button onclick="addToCart('Modern Lamp')">Add to Cart</button>
-</div>
-
-<div class="product">
-<img src="https://images.unsplash.com/photo-1493666438817-866a91353ca9">
-<p>Wood Chair</p>
-<button onclick="addToCart('Wood Chair')">Add to Cart</button>
-</div>
-
-</div>
-
-</div>
-
-
-<!-- CART -->
-
-<div class="cart" id="cart">
-
-<h2>Cart</h2>
-
-<ul id="cartItems"></ul>
-
-</div>
-
-
-
-<script>
-
-let cart=[]
-let cartCount=document.getElementById("cartCount")
-let cartItems=document.getElementById("cartItems")
-
-function addToCart(item){
-
-cart.push(item)
-
-cartCount.innerText=cart.length
-
-let li=document.createElement("li")
-li.innerText=item
-
-cartItems.appendChild(li)
-
-}
-
-function toggleCart(){
-
-cart.classList.toggle("active")
-
-mobileMenu.classList.remove("active")
-
-}
-
-function toggleMenu(){
-
-mobileMenu.classList.toggle("active")
-
-}
-
-function openPage(page){
-
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
-
-document.getElementById(page).classList.add("active")
-
-mobileMenu.classList.remove("active")
-
-cart.classList.remove("active")
-
-window.scrollTo(0,0)
-
-}
-
-</script>
-
+    <header>
+        <div class="logo" onclick="openPage('home')">KAYAPALAT</div>
+        <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
+        <nav id="navbar">
+            <a onclick="openPage('home')" class="active-link" data-target="home">Home</a>
+            <a onclick="openPage('fashion')" data-target="fashion">Fashion</a>
+            <a onclick="openPage('decor')" data-target="decor">Decor</a>
+            <a onclick="toggleCart()" class="cart-icon">
+                Cart <span id="cartCount">(0)</span>
+            </a>
+        </nav>
+    </header>
+
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+    <div id="toast">Item added to cart!</div>
+
+    <div id="home" class="page active">
+        <section class="hero">
+            <h1>KAYAPALAT</h1>
+            <p>Elegance Redefined. Makeover Allover.</p>
+            <button class="btn" onclick="openPage('fashion')">Explore Collection</button>
+        </section>
+
+        <div style="margin-top: 80px;">
+            <div class="section-header">
+                <h2 class="page-title">Trending Now</h2>
+            </div>
+            <div class="grid" id="featuredGrid"></div>
+        </div>
+    </div>
+
+    <div id="fashion" class="page">
+        <div class="section-header">
+            <h2 class="page-title">Fashion Collection</h2>
+            <div class="search-box">
+                <input type="text" placeholder="Search fashion..." oninput="searchProducts(this.value, 'fashion')">
+            </div>
+        </div>
+        <div class="grid" id="fashionGrid"></div>
+    </div>
+
+    <div id="decor" class="page">
+        <div class="section-header">
+            <h2 class="page-title">Luxury Decor</h2>
+            <div class="search-box">
+                <input type="text" placeholder="Search decor..." oninput="searchProducts(this.value, 'decor')">
+            </div>
+        </div>
+        <div class="grid" id="decorGrid"></div>
+    </div>
+
+    <div class="cart" id="cartBox">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <span class="close-cart" onclick="closeAll()">&times;</span>
+        </div>
+        <div id="cartItems">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cartTotal">₹0</span>
+            </div>
+            <button class="btn checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div class="popup" id="productPopup">
+        <span class="close-popup" onclick="closeAll()">&times;</span>
+        <div class="popup-img-wrap">
+            <img id="popupImg" src="" alt="Product">
+        </div>
+        <div class="popup-info">
+            <h2 id="popupName">Product Name</h2>
+            <p id="popupPrice">₹0</p>
+            <p class="popup-desc">Experience the premium quality and craftsmanship of Kayapalat. Designed to elevate your everyday lifestyle with unmatched elegance.</p>
+            <button class="btn add-btn" id="popupCartBtn" style="width: 100%; border: 1px solid var(--primary-color);">Add to Cart</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>KAYAPALAT</h3>
+                <p>Redefining your personal style and living spaces with premium, handcrafted designs.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Shop</h3>
+                <a onclick="openPage('fashion')">Women's Fashion</a>
+                <a onclick="openPage('decor')">Home Decor</a>
+                <a href="#">New Arrivals</a>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <a href="#">Contact Us</a>
+                <a href="#">Shipping Policy</a>
+                <a href="#">Returns & Exchanges</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <script>document.write(new Date().getFullYear())</script> Kayapalat. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Expanded Product Data
+        const fashionProducts = [
+            { id: 'f1', name: "Midnight Silk Kurta", price: 9500, img: "https://images.unsplash.com/photo-1520975922323-7b73b6b0b5d5?w=800" },
+            { id: 'f2', name: "Classic Ivory Dress", price: 12000, img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800" },
+            { id: 'f3', name: "Velvet Evening Gown", price: 18500, img: "https://images.unsplash.com/photo-1566160983193-4364022839b8?w=800" },
+            { id: 'f4', name: "Summer Linen Tunic", price: 4200, img: "https://images.unsplash.com/photo-1550639525-c97d455acf70?w=800" }
+        ];
+
+        const decorProducts = [
+            { id: 'd1', name: "Minimal Ceramic Vase", price: 8400, img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800" },
+            { id: 'd2', name: "Abstract Stone Sculpture", price: 14000, img: "https://images.unsplash.com/photo-1616627451515-cbc80e5ece35?w=800" },
+            { id: 'd3', name: "Woven Pendant Light", price: 11200, img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800" },
+            { id: 'd4', name: "Velvet Accent Cushion", price: 2500, img: "https://images.unsplash.com/photo-1584100936595-c0654b355040?w=800" }
+        ];
+
+        // Page Navigation
+        function openPage(page) {
+            closeAll();
+            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+            document.getElementById(page).classList.add("active");
+            
+            // Update Active Link State
+            document.querySelectorAll("nav a").forEach(link => link.classList.remove("active-link"));
+            let activeLink = document.querySelector(`nav a[data-target="${page}"]`);
+            if(activeLink) activeLink.classList.add("active-link");
+
+            document.getElementById('navbar').classList.remove('mobile-active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('navbar').classList.toggle('mobile-active');
+        }
+
+        // Render Product Cards dynamically
+        function renderCards(containerId, products) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            if(products.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #999;">No products found.</p>`;
+                return;
+            }
+
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="card">
+                        <div class="wishlist" onclick="toggleWish(event)">♡</div>
+                        <div class="img-container" onclick='openPopup("${p.id}", "${p.name}", ${p.price}, "${p.img}")'>
+                            <img src="${p.img}" alt="${p.name}">
+                        </div>
+                        <div class="card-content">
+                            <h3>${p.name}</h3>
+                            <p class="price">₹${p.price.toLocaleString('en-IN')}</p>
+                            <button class="add-btn" onclick='addToCart("${p.id}", "${p.name}", ${p.price}, "${p.img}")'>Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Initialize Shop
+        function initShop() {
+            renderCards('fashionGrid', fashionProducts);
+            renderCards('decorGrid', decorProducts);
+            
+            // Populate featured section on home page
+            const featured = [fashionProducts[0], decorProducts[0], fashionProducts[2]];
+            renderCards('featuredGrid', featured);
+            
+            updateCart();
+        }
+
+        // Search Functionality (Fixed)
+        function searchProducts(query, category) {
+            const lowerQuery = query.toLowerCase();
+            if (category === 'fashion') {
+                const filtered = fashionProducts.filter(p => p.name.toLowerCase().includes(lowerQuery));
+                renderCards('fashionGrid', filtered);
+            } else if (category === 'decor') {
+                const filtered = decorProducts.filter(p => p.name.toLowerCase().includes(lowerQuery));
+                renderCards('decorGrid', filtered);
+            }
+        }
+
+        // Wishlist Toggle
+        function toggleWish(e) {
+            e.stopPropagation();
+            const btn = e.target;
+            if(btn.innerText === "♡") {
+                btn.innerText = "♥";
+                btn.classList.add('active-wish');
+            } else {
+                btn.innerText = "♡";
+                btn.classList.remove('active-wish');
+            }
+        }
+
+        // Popup Modal
+        function openPopup(id, name, price, img) {
+            document.getElementById('overlay').classList.add("active");
+            document.getElementById('productPopup').classList.add("active");
+            
+            document.getElementById('popupImg').src = img;
+            document.getElementById('popupName').innerText = name;
+            document.getElementById('popupPrice').innerText = "₹" + price.toLocaleString('en-IN');
+            
+            document.getElementById('popupCartBtn').onclick = function() {
+                addToCart(id, name, price, img);
+                closeAll();
+            }
+        }
+
+        function closeAll() {
+            document.getElementById('cartBox').classList.remove("active");
+            document.getElementById('productPopup').classList.remove("active");
+            document.getElementById('overlay').classList.remove("active");
+        }
+
+        function toggleCart() {
+            document.getElementById('overlay').classList.toggle("active");
+            document.getElementById('cartBox').classList.toggle("active");
+        }
+
+        // Cart State Management
+        function getCart() {
+            return JSON.parse(localStorage.getItem("kpCart")) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem("kpCart", JSON.stringify(cart));
+            updateCart();
+        }
+
+        // Add to Cart + Toast
+        function addToCart(id, name, price, img) {
+            let cart = getCart();
+            let item = cart.find(i => i.id === id);
+
+            if(item) {
+                item.qty++;
+            } else {
+                cart.push({ id, name, price, img, qty: 1 });
+            }
+
+            saveCart(cart);
+            showToast();
+        }
+
+        function changeQty(index, change) {
+            let cart = getCart();
+            cart[index].qty += change;
+            
+            if(cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart(cart);
+        }
+
+        function removeItem(index) {
+            let cart = getCart();
+            cart.splice(index, 1);
+            saveCart(cart);
+        }
+
+        // Render Cart UI
+        function updateCart() {
+            let cart = getCart();
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = "";
+
+            let total = 0;
+            let count = 0;
+
+            if(cart.length === 0) {
+                cartItems.innerHTML = `<div class="empty-cart">Your cart is currently empty.<br><br><button class="btn" onclick="openPage('fashion'); closeAll();">Start Shopping</button></div>`;
+            } else {
+                cart.forEach((i, index) => {
+                    total += i.price * i.qty;
+                    count += i.qty;
+
+                    cartItems.innerHTML += `
+                        <div class="cart-item">
+                            <img src="${i.img}" alt="${i.name}">
+                            <div class="cart-item-details">
+                                <h4>${i.name}</h4>
+                                <p>₹${i.price.toLocaleString('en-IN')}</p>
+                                <div class="qty-controls">
+                                    <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                                    <span>${i.qty}</span>
+                                    <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                                </div>
+                                <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('cartTotal').innerText = "₹" + total.toLocaleString('en-IN');
+            document.getElementById('cartCount').innerText = `(${count})`;
+        }
+
+        // Toast Notification Function
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // Close modals on Escape key
+        document.addEventListener("keydown", e => {
+            if(e.key === "Escape") closeAll();
+        });
+
+        // Run on load
+        window.onload = initShop;
+
+    </script>
 </body>
 </html>
