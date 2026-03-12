@@ -13,10 +13,11 @@
             --primary: #3A2E28; 
             --accent: #C86B47; 
             --accent-light: #E8A88B;
-            --bg: #F4EFE6; 
+            --bg: #F4EFE6; /* Ivory White / Earthy */
             --card-bg: #FCF9F2;
             --text-muted: #6B5E55;
             --white: #ffffff;
+            --gold: #D4AF37;
             --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
@@ -29,20 +30,27 @@
             overflow-x: hidden;
         }
 
-        /* --- Preloader --- */
+        /* --- Cinematic Preloader --- */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: var(--bg); color: var(--accent);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.8s var(--ease), visibility 0.8s;
+            background: #050505; display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: background 1.5s var(--ease), opacity 0.8s var(--ease), visibility 0.8s;
         }
-        .loader-text { font-family: 'Playfair Display', serif; font-size: 38px; font-style: italic; letter-spacing: 4px; animation: float 2s ease-in-out infinite alternate; }
-        @keyframes float { from { transform: translateY(5px); } to { transform: translateY(-5px); } }
+        #preloader.phase-ivory { background: var(--bg); }
+        .loader-text { 
+            font-family: 'Playfair Display', serif; font-size: 42px; font-style: italic; 
+            letter-spacing: 6px; opacity: 0; animation: goldenReveal 3s var(--ease) forwards;
+        }
+        @keyframes goldenReveal {
+            0% { opacity: 0; color: var(--gold); text-shadow: 0 0 0 rgba(212, 175, 55, 0); transform: scale(0.95); }
+            40% { opacity: 1; color: var(--gold); text-shadow: 0 0 30px rgba(212, 175, 55, 0.8); transform: scale(1.02); }
+            70% { opacity: 1; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); transform: scale(1); }
+            100% { opacity: 1; color: var(--primary); text-shadow: none; transform: scale(1); }
+        }
 
         /* --- Infinite Marquee --- */
         .marquee-container {
-            background: var(--primary); color: var(--bg);
-            padding: 10px 0; overflow: hidden; position: relative;
+            background: var(--primary); color: var(--bg); padding: 10px 0; overflow: hidden; position: relative;
             white-space: nowrap; font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
         }
         .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
@@ -50,63 +58,37 @@
 
         /* --- Header & Navigation --- */
         header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; background: rgba(244, 239, 230, 0.9);
-            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid rgba(58, 46, 40, 0.1); transition: all 0.4s ease;
+            display: flex; justify-content: space-between; align-items: center; padding: 20px 5%;
+            background: rgba(244, 239, 230, 0.9); backdrop-filter: blur(10px); position: sticky;
+            top: 0; z-index: 1000; border-bottom: 1px solid rgba(58, 46, 40, 0.1); transition: all 0.4s ease;
         }
         header.scrolled { padding: 15px 5%; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
 
-        .logo { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; letter-spacing: 2px; cursor: pointer; position: relative; z-index: 1002; color: var(--primary); }
-
-        .header-actions { display: flex; align-items: center; gap: 25px; position: relative; z-index: 1002; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; letter-spacing: 2px; cursor: pointer; color: var(--primary); }
         
         nav { display: flex; gap: 35px; align-items: center; }
-        nav a { cursor: pointer; font-size: 14px; font-weight: 400; text-transform: uppercase; letter-spacing: 1.5px; position: relative; transition: color 0.3s; color: var(--primary); }
+        nav a { cursor: pointer; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; position: relative; transition: color 0.3s; color: var(--primary); }
         nav a:hover, nav a.active-link { color: var(--accent); }
-        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--accent); transition: width 0.3s var(--ease); border-radius: 2px; }
+        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--accent); transition: width 0.3s var(--ease); }
         nav a:hover::after, nav a.active-link::after { width: 100%; }
 
+        .header-actions { display: flex; align-items: center; gap: 25px; }
         .cart-icon { font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: color 0.3s; }
         .cart-icon:hover { color: var(--accent); }
 
         .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
-        .hamburger span { width: 30px; height: 2px; background: var(--primary); transition: 0.4s var(--ease); border-radius: 2px; }
+        .hamburger span { width: 30px; height: 2px; background: var(--primary); transition: 0.4s var(--ease); }
 
         /* --- Hero Section --- */
-        .hero {
-            position: relative; height: 85vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; color: var(--bg); overflow: hidden; background: var(--primary);
-            border-radius: 0 0 40px 40px; margin-bottom: 40px;
-        }
-        
-        .hero-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1558211583-d26f610c1eb1?w=2000&q=80') center/cover no-repeat;
-            animation: kenBurns 30s ease-out infinite alternate;
-            z-index: 0; opacity: 0.8;
-        }
-        
-        .hero-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(58, 46, 40, 0.3), rgba(58, 46, 40, 0.8));
-            z-index: 1;
-        }
-        
+        .hero { position: relative; height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--bg); overflow: hidden; background: var(--primary); border-radius: 0 0 40px 40px; margin-bottom: 40px; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1558211583-d26f610c1eb1?w=2000&q=80') center/cover no-repeat; animation: kenBurns 30s ease-out infinite alternate; opacity: 0.8; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(58, 46, 40, 0.3), rgba(58, 46, 40, 0.8)); }
         @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
-
         .hero-content { z-index: 2; animation: fadeInUp 1s var(--ease) 0.5s both; padding: 0 20px; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(45px, 8vw, 85px); font-style: italic; letter-spacing: 1px; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.2); }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(45px, 8vw, 85px); font-style: italic; letter-spacing: 1px; margin-bottom: 15px; }
         .hero p { font-size: 14px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 35px; font-weight: 300; }
-        
-        .btn-luxury {
-            padding: 16px 45px; background: var(--accent); color: var(--white);
-            border: none; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-            cursor: pointer; transition: all 0.4s var(--ease); border-radius: 30px;
-            box-shadow: 0 10px 20px rgba(200, 107, 71, 0.3);
-        }
+        .btn-luxury { padding: 16px 45px; background: var(--accent); color: var(--white); border: none; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.4s var(--ease); border-radius: 30px; box-shadow: 0 10px 20px rgba(200, 107, 71, 0.3); }
         .btn-luxury:hover { background: #B35838; transform: translateY(-3px); }
-
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Sections & Grid --- */
@@ -114,67 +96,44 @@
         .page.active { display: block; }
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 1px dashed rgba(58, 46, 40, 0.2); padding-bottom: 20px;}
         .page-title { font-family: 'Playfair Display', serif; font-size: 42px; font-style: italic; color: var(--primary); }
-        
         .filters { display: flex; gap: 20px; }
         .filters select, .filters input { padding: 10px; border: none; border-bottom: 1px solid rgba(58, 46, 40, 0.3); background: transparent; font-family: 'Outfit'; outline: none; color: var(--primary); }
 
-        /* --- Category Scroll Bar --- */
-        .category-bar {
-            display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; margin-bottom: 30px;
-            scrollbar-width: none;
-        }
+        .category-bar { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; margin-bottom: 30px; scrollbar-width: none; }
         .category-bar::-webkit-scrollbar { display: none; }
-        
-        .cat-btn {
-            padding: 10px 24px; background: transparent; border: 1px solid rgba(58, 46, 40, 0.3);
-            border-radius: 30px; color: var(--primary); font-family: 'Outfit'; font-size: 14px;
-            white-space: nowrap; cursor: pointer; transition: 0.3s;
-        }
-        .cat-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .cat-btn.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+        .cat-btn { padding: 10px 24px; background: transparent; border: 1px solid rgba(58, 46, 40, 0.3); border-radius: 30px; color: var(--primary); font-family: 'Outfit'; font-size: 14px; white-space: nowrap; cursor: pointer; transition: 0.3s; }
+        .cat-btn:hover, .cat-btn.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
 
-        /* --- Rustic Product Card --- */
         .card { cursor: pointer; background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: transform 0.4s var(--ease); }
         .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(200, 107, 71, 0.1); }
-        
-        .img-container { position: relative; overflow: hidden; aspect-ratio: 4/5; }
+        .img-container { position: relative; overflow: hidden; aspect-ratio: 4/5; background: #EAE6DF; }
         .card img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s var(--ease), transform 2s var(--ease); position: absolute; top: 0; left: 0; }
         .card .img-hover { opacity: 0; }
         .card:hover .img-main { opacity: 0; }
         .card:hover .img-hover { opacity: 1; transform: scale(1.05); }
-        
         .card-content { padding: 25px 20px; text-align: center; }
         .card-content h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 500; margin-bottom: 8px; color: var(--primary); }
         .price { color: var(--accent); font-size: 16px; font-weight: 500; }
 
-        /* --- Interactive Popup Modal --- */
+        /* --- Popup Modal --- */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(58, 46, 40, 0.7); backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: 0.4s; z-index: 1000; }
         .overlay.active { opacity: 1; pointer-events: auto; }
         
-        .popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%);
-            background: var(--card-bg); width: 95%; max-width: 900px; height: 80vh;
-            display: flex; opacity: 0; pointer-events: none; transition: 0.5s var(--ease);
-            z-index: 1002; box-shadow: 0 30px 60px rgba(0,0,0,0.2); border-radius: 20px; overflow: hidden;
-        }
+        .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%); background: var(--card-bg); width: 95%; max-width: 900px; height: 80vh; display: flex; opacity: 0; pointer-events: none; transition: 0.5s var(--ease); z-index: 1002; box-shadow: 0 30px 60px rgba(0,0,0,0.2); border-radius: 20px; overflow: hidden; }
         .popup.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
-        .popup-img-wrap { width: 50%; height: 100%; }
+        .popup-img-wrap { width: 50%; height: 100%; background: #EAE6DF; }
         .popup-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .popup-info { width: 50%; padding: 50px; display: flex; flex-direction: column; overflow-y: auto; position: relative;}
-        
-        .close-popup { position: absolute; top: 20px; right: 25px; font-size: 30px; cursor: pointer; font-weight: 300; color: var(--primary); z-index: 10; }
+        .close-popup { position: absolute; top: 20px; right: 25px; font-size: 30px; cursor: pointer; color: var(--primary); z-index: 10; }
         
         .popup h2 { font-family: 'Playfair Display', serif; font-size: 34px; font-style: italic; margin-bottom: 10px; color: var(--primary); }
         .popup .popup-price { font-size: 20px; color: var(--accent); margin-bottom: 25px; font-weight: 500;}
-        
-        .size-selector { display: flex; gap: 12px; margin-bottom: 30px; }
-        .size-btn { width: 45px; height: 45px; border: 1px solid rgba(58, 46, 40, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; background: transparent; color: var(--primary); font-family: 'Outfit'; }
+        .size-selector { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
+        .size-btn { min-width: 45px; height: 45px; padding: 0 15px; border: 1px solid rgba(58, 46, 40, 0.2); border-radius: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; background: transparent; color: var(--primary); font-family: 'Outfit'; }
         .size-btn:hover, .size-btn.selected { border-color: var(--accent); background: var(--accent); color: var(--white); }
-        
-        .popup-desc { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 40px; }
-        
+        .popup-desc { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 40px; white-space: pre-wrap; }
         .add-to-cart-sticky { margin-top: auto; width: 100%; padding: 18px; background: var(--primary); color: var(--bg); border: none; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; border-radius: 30px; }
         .add-to-cart-sticky:hover { background: var(--accent); }
 
@@ -189,46 +148,29 @@
         .cart-item-details h4 { font-family: 'Playfair Display', serif; font-size: 16px; margin-bottom: 5px; }
         .cart-total-row { font-size: 22px; font-family: 'Playfair Display', serif; display: flex; justify-content: space-between; margin: 20px 0; color: var(--primary); }
         .checkout-btn { width: 100%; padding: 18px; background: var(--accent); color: var(--white); border: none; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border-radius: 30px; transition: 0.3s; }
-        .checkout-btn:hover { background: #B35838; }
 
         /* --- Footer --- */
         footer { background: var(--primary); color: var(--bg); padding: 80px 5% 40px; margin-top: 80px; text-align: center; border-radius: 40px 40px 0 0; }
         .footer-logo { font-family: 'Playfair Display', serif; font-size: 36px; font-style: italic; letter-spacing: 2px; color: var(--accent-light); margin-bottom: 20px; }
 
-        /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
             .hamburger { display: flex; }
-            nav {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-                background: var(--bg); flex-direction: column; justify-content: center;
-                opacity: 0; pointer-events: none; transition: 0.5s var(--ease); z-index: 1001;
-            }
+            nav { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg); flex-direction: column; justify-content: center; opacity: 0; pointer-events: none; transition: 0.5s var(--ease); z-index: 1001; }
             nav.open { opacity: 1; pointer-events: auto; }
             nav a { font-size: 28px; font-family: 'Playfair Display', serif; margin: 15px 0; font-style: italic; }
-            nav a::after { display: none; }
-            
-            .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .hamburger.open span:nth-child(2) { opacity: 0; }
-            .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
             .hero { border-radius: 0 0 25px 25px; }
             .hero h1 { font-size: 45px; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
             .filters { flex-direction: column; width: 100%; }
-            .filters input, .filters select { width: 100%; }
-            
             .popup { flex-direction: column; height: 90vh; overflow-y: auto; justify-content: flex-start; border-radius: 15px; }
             .popup-img-wrap, .popup-info { width: 100%; height: auto; }
             .popup-img-wrap { min-height: 350px; }
-            .close-popup { color: var(--primary); background: rgba(255,255,255,0.9); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10; }
-            
             .cart { padding: 25px; max-width: 100%; right: -100%; }
         }
     </style>
 </head>
 
 <body>
-
     <div id="preloader">
         <div class="loader-text">KAYAPALAT</div>
     </div>
@@ -241,18 +183,14 @@
 
     <header id="main-header">
         <div class="logo" onclick="openPage('home')">KAYAPALAT</div>
-        
         <nav id="navbar">
             <a onclick="openPage('home')" class="active-link" data-target="home">Home</a>
             <a onclick="openPage('fashion')" data-target="fashion">Fashion</a>
             <a onclick="openPage('furnishings')" data-target="furnishings">Furnishings</a>
         </nav>
-
         <div class="header-actions">
             <a onclick="toggleCart()" class="cart-icon">Bag <span id="cartCount">(0)</span></a>
-            <div class="hamburger" onclick="toggleMobileMenu()">
-                <span></span><span></span><span></span>
-            </div>
+            <div class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></div>
         </div>
     </header>
 
@@ -268,11 +206,8 @@
                 <button class="btn-luxury" onclick="openPage('furnishings')">Explore Furnishings</button>
             </div>
         </section>
-        
         <div style="padding: 60px 5%; max-width: 1500px; margin: auto;">
-            <div class="section-header">
-                <h2 class="page-title">Curated For The Free Spirit</h2>
-            </div>
+            <div class="section-header"><h2 class="page-title">Curated For The Free Spirit</h2></div>
             <div class="grid" id="featuredGrid"></div>
         </div>
     </div>
@@ -289,14 +224,12 @@
                 </select>
             </div>
         </div>
-
         <div class="category-bar" id="fashion-categories">
             <button class="cat-btn active" onclick="filterCategory('All', 'fashion', this)">All Pieces</button>
             <button class="cat-btn" onclick="filterCategory('Dresses & Kaftans', 'fashion', this)">Dresses & Kaftans</button>
             <button class="cat-btn" onclick="filterCategory('Tops & Tunics', 'fashion', this)">Tops & Tunics</button>
             <button class="cat-btn" onclick="filterCategory('Co-ord Sets', 'fashion', this)">Co-ord Sets</button>
         </div>
-
         <div class="grid" id="fashionGrid"></div>
     </div>
 
@@ -312,7 +245,6 @@
                 </select>
             </div>
         </div>
-
         <div class="category-bar" id="furnishings-categories">
             <button class="cat-btn active" onclick="filterCategory('All', 'furnishings', this)">All Items</button>
             <button class="cat-btn" onclick="filterCategory('Carpets & Rugs', 'furnishings', this)">Carpets & Rugs</button>
@@ -320,29 +252,18 @@
             <button class="cat-btn" onclick="filterCategory('Accent Furniture', 'furnishings', this)">Accent Furniture</button>
             <button class="cat-btn" onclick="filterCategory('Decor Items', 'furnishings', this)">Decor Items</button>
         </div>
-
         <div class="grid" id="furnishingsGrid"></div>
     </div>
 
     <div class="popup" id="productPopup">
         <span class="close-popup" onclick="closeAll()">&times;</span>
-        <div class="popup-img-wrap">
-            <img id="popupImg" src="" alt="Product">
-        </div>
+        <div class="popup-img-wrap"><img id="popupImg" src="" alt="Product"></div>
         <div class="popup-info">
             <h2 id="popupName">Product Name</h2>
             <p class="popup-price" id="popupPrice">₹0</p>
-            
             <p style="font-size: 13px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; color: var(--text-muted);">Select Size</p>
-            <div class="size-selector">
-                <button class="size-btn">S</button>
-                <button class="size-btn selected">M</button>
-                <button class="size-btn">L</button>
-            </div>
-
-            <p class="popup-desc">Embrace the imperfections and soulful charm of our handcrafted pieces. Designed with indigenous techniques and natural materials, bringing a warm, earthy aesthetic right to your doorstep.</p>
             
-            <button class="add-to-cart-sticky" id="popupCartBtn">Add to Bag</button>
+            <div class="size-selector" id="popupSizes"></div> <p class="popup-desc" id="popupDesc"></p> <button class="add-to-cart-sticky" id="popupCartBtn">Add to Bag</button>
         </div>
     </div>
 
@@ -353,10 +274,7 @@
         </div>
         <div id="cartItems"></div>
         <div>
-            <div class="cart-total-row">
-                <span>Total</span>
-                <span id="cartTotal">₹0</span>
-            </div>
+            <div class="cart-total-row"><span>Total</span><span id="cartTotal">₹0</span></div>
             <button class="checkout-btn">Checkout</button>
         </div>
     </div>
@@ -370,13 +288,89 @@
     </footer>
 
     <script>
-        window.addEventListener('load', () => {
+        // Your Live Google Sheet CSV Links
+        const FASHION_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=0&single=true&output=csv";
+        const FURNISHINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=809165328&single=true&output=csv";
+
+        let fashionProducts = [];
+        let furnishingsProducts = [];
+
+        // Function to fetch and parse CSV
+        async function fetchGoogleSheetData(url) {
+            try {
+                const response = await fetch(url);
+                const data = await response.text();
+                return parseCSV(data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                return [];
+            }
+        }
+
+        // CSV Parser Logic
+        function parseCSV(str) {
+            const result = [];
+            const rows = str.split('\n');
+            if(rows.length < 2) return result;
+            const headers = rows[0].split(',').map(h => h.trim());
+            
+            for(let i=1; i<rows.length; i++) {
+                if(!rows[i].trim()) continue;
+                // Regex to perfectly split by commas, ignoring commas inside quotes
+                let currentline = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                const obj = {};
+                
+                for(let j=0; j<headers.length; j++){
+                    let val = currentline[j] ? currentline[j].trim() : '';
+                    if(val.startsWith('"') && val.endsWith('"')) {
+                        val = val.substring(1, val.length - 1).replace(/""/g, '"');
+                    }
+                    
+                    // Map Sheet Columns to Code Variables
+                    if(headers[j] === "ID") obj.id = val;
+                    if(headers[j] === "Category") obj.category = val;
+                    if(headers[j] === "Name") obj.name = val;
+                    if(headers[j] === "Price") obj.price = parseInt(val.replace(/[^0-9]/g, '')) || 0;
+                    if(headers[j] === "Sizes") obj.sizes = val;
+                    if(headers[j] === "Description") obj.desc = val;
+                    if(headers[j] === "Image_Main") obj.img = val;
+                    if(headers[j] === "Image_Hover") obj.hoverImg = val;
+                }
+                if(obj.id) result.push(obj);
+            }
+            return result;
+        }
+
+        // Initialize Shop Data
+        window.addEventListener('load', async () => {
+            // Fetch live data from sheets
+            fashionProducts = await fetchGoogleSheetData(FASHION_URL);
+            furnishingsProducts = await fetchGoogleSheetData(FURNISHINGS_URL);
+
+            // Render all cards
+            renderCards('fashionGrid', fashionProducts);
+            renderCards('furnishingsGrid', furnishingsProducts);
+            
+            // Create Featured items for Home Page (Mix of both)
+            let featured = [];
+            if(fashionProducts.length > 0) featured.push(fashionProducts[0]);
+            if(furnishingsProducts.length > 0) featured.push(furnishingsProducts[0]);
+            if(fashionProducts.length > 1) featured.push(fashionProducts[1]);
+            renderCards('featuredGrid', featured);
+
+            updateCart();
+
+            // Cinematic Preloader Logic (Hides after data is loaded)
             setTimeout(() => {
-                document.getElementById('preloader').style.opacity = '0';
-                document.getElementById('preloader').style.visibility = 'hidden';
-            }, 1000);
+                document.getElementById('preloader').classList.add('phase-ivory');
+                setTimeout(() => {
+                    document.getElementById('preloader').style.opacity = '0';
+                    document.getElementById('preloader').style.visibility = 'hidden';
+                }, 1000);
+            }, 800);
         });
 
+        // UI Interactions
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if(window.scrollY > 50) header.classList.add('scrolled');
@@ -388,39 +382,16 @@
             document.querySelector('.hamburger').classList.toggle('open');
         }
 
-        // Updated Data based on new categories
-        let fashionProducts = [
-            { id: 'f1', name: "Rust Block-Print Kurta", price: 4500, category: "Tops & Tunics", img: "https://images.unsplash.com/photo-1583391733958-62507873307b?w=800", hoverImg: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800" },
-            { id: 'f2', name: "Indigo Tie-Dye Dress", price: 5200, category: "Dresses & Kaftans", img: "https://images.unsplash.com/photo-1596455607563-ad6193f76b62?w=800", hoverImg: "https://images.unsplash.com/photo-1515347619362-73a11641e411?w=800" },
-            { id: 'f3', name: "Earthy Linen Tunic", price: 3800, category: "Tops & Tunics", img: "https://images.unsplash.com/photo-1550639525-c97d455acf70?w=800", hoverImg: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" },
-            { id: 'f4', name: "Block Print Lounge Set", price: 4200, category: "Co-ord Sets", img: "https://images.unsplash.com/photo-1599818816480-165fbff19901?w=800", hoverImg: "https://images.unsplash.com/photo-1515347619362-73a11641e411?w=800" } 
-        ];
-
-        let furnishingsProducts = [
-            { id: 'd1', name: "Terracotta Clay Pot", price: 2400, category: "Decor Items", img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800", hoverImg: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800" },
-            { id: 'd2', name: "Handwoven Jute Rug", price: 8500, category: "Carpets & Rugs", img: "https://images.unsplash.com/photo-1534889156217-d643df14f14a?w=800", hoverImg: "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800" },
-            { id: 'd3', name: "Macrame Wall Hanging", price: 3200, category: "Handicraft Items", img: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=800", hoverImg: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" },
-            { id: 'd4', name: "Vintage Wooden Stool", price: 6500, category: "Accent Furniture", img: "https://images.unsplash.com/photo-1503602642458-232111445657?w=800", hoverImg: "https://images.unsplash.com/photo-1506898667547-42e22a46e125?w=800" },
-            { id: 'd5', name: "Ceramic Serving Bowl", price: 1500, category: "Decor Items", img: "https://images.unsplash.com/photo-1610348725531-843dcf514a8e?w=800", hoverImg: "https://images.unsplash.com/photo-1574676643209-e5da48d0df54?w=800" },
-            { id: 'd6', name: "Rattan Armchair", price: 12500, category: "Accent Furniture", img: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800", hoverImg: "https://images.unsplash.com/photo-1592078615290-07fdef134371?w=800" }
-        ];
-
         function openPage(page) {
             closeAll();
             document.getElementById('navbar').classList.remove('open');
-            document.querySelector('.hamburger').classList.remove('open');
-
             document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
             document.getElementById(page).classList.add("active");
-            
             document.querySelectorAll("nav a").forEach(link => link.classList.remove("active-link"));
             let activeLink = document.querySelector(`nav a[data-target="${page}"]`);
             if(activeLink) activeLink.classList.add("active-link");
             
-            if(page === 'fashion' || page === 'furnishings') {
-                resetFilters(page);
-            }
-            
+            if(page === 'fashion' || page === 'furnishings') resetFilters(page);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -430,10 +401,7 @@
             btnElement.classList.add('active');
 
             let data = type === 'fashion' ? fashionProducts : furnishingsProducts;
-            if(category !== 'All') {
-                data = data.filter(p => p.category === category);
-            }
-            
+            if(category !== 'All') data = data.filter(p => p.category === category);
             renderCards(type === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', data);
         }
 
@@ -450,16 +418,17 @@
             container.innerHTML = '';
             
             if(products.length === 0) {
-                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-style: italic;">No items found in this category right now.</p>`;
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-style: italic;">We're updating our collection. New items arriving soon.</p>`;
                 return;
             }
 
             products.forEach(p => {
+                const hoverHtml = p.hoverImg ? `<img class="img-hover" src="${p.hoverImg}" alt="Hover View">` : '';
                 container.innerHTML += `
-                    <div class="card" onclick='openPopup("${p.id}", "${p.name}", ${p.price}, "${p.img}")'>
+                    <div class="card" onclick="openPopup('${p.id}')">
                         <div class="img-container">
-                            <img class="img-main" src="${p.img}" alt="${p.name}">
-                            <img class="img-hover" src="${p.hoverImg}" alt="${p.name} Alternate View">
+                            <img class="img-main" src="${p.img}" onerror="this.src='https://via.placeholder.com/400x500?text=Kayapalat'">
+                            ${hoverHtml}
                         </div>
                         <div class="card-content">
                             <h3>${p.name}</h3>
@@ -468,13 +437,6 @@
                     </div>
                 `;
             });
-        }
-
-        function initShop() {
-            renderCards('fashionGrid', fashionProducts);
-            renderCards('furnishingsGrid', furnishingsProducts);
-            renderCards('featuredGrid', [fashionProducts[0], furnishingsProducts[2], fashionProducts[1]]);
-            updateCart();
         }
 
         function searchProducts(query, category) {
@@ -491,18 +453,40 @@
             renderCards(category === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', data);
         }
 
-        function openPopup(id, name, price, img) {
+        function openPopup(id) {
+            // Find product from both arrays
+            const product = [...fashionProducts, ...furnishingsProducts].find(item => item.id === id);
+            if(!product) return;
+
             document.getElementById('overlay').classList.add("active");
             document.getElementById('productPopup').classList.add("active");
-            document.getElementById('popupImg').src = img;
-            document.getElementById('popupName').innerText = name;
-            document.getElementById('popupPrice').innerText = "₹" + price.toLocaleString('en-IN');
+            document.getElementById('popupImg').src = product.img;
+            document.getElementById('popupName').innerText = product.name;
+            document.getElementById('popupPrice').innerText = "₹" + product.price.toLocaleString('en-IN');
             
+            // Set Description
+            document.getElementById('popupDesc').innerText = product.desc || 'Embrace the imperfections and soulful charm of our handcrafted pieces.';
+
+            // Render Dynamic Sizes based on Google Sheet Data
+            const sizesContainer = document.getElementById('popupSizes');
+            sizesContainer.innerHTML = '';
+            if(product.sizes) {
+                const sizesArray = product.sizes.split(',').map(s => s.trim());
+                sizesArray.forEach((size, index) => {
+                    sizesContainer.innerHTML += `<button class="size-btn ${index === 0 ? 'selected' : ''}" onclick="selectSize(this)">${size}</button>`;
+                });
+            }
+
             document.getElementById('popupCartBtn').onclick = () => {
-                addToCart(id, name, price, img);
+                addToCart(product.id, product.name, product.price, product.img);
                 closeAll();
                 toggleCart();
             }
+        }
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+            element.classList.add('selected');
         }
 
         function closeAll() {
@@ -513,17 +497,9 @@
 
         function toggleCart() {
             document.getElementById('navbar').classList.remove('open');
-            document.querySelector('.hamburger').classList.remove('open');
             document.getElementById('overlay').classList.toggle("active");
             document.getElementById('cartBox').classList.toggle("active");
         }
-
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
 
         function getCart() { return JSON.parse(localStorage.getItem("kpCartBoho")) || []; }
         function saveCart(cart) { localStorage.setItem("kpCartBoho", JSON.stringify(cart)); updateCart(); }
@@ -570,8 +546,6 @@
             cart.splice(index, 1);
             saveCart(cart);
         }
-
-        window.onload = initShop;
     </script>
 </body>
 </html>
