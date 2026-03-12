@@ -118,12 +118,12 @@
         .filters { display: flex; gap: 20px; }
         .filters select, .filters input { padding: 10px; border: none; border-bottom: 1px solid rgba(58, 46, 40, 0.3); background: transparent; font-family: 'Outfit'; outline: none; color: var(--primary); }
 
-        /* --- 🌟 NEW: Category Scroll Bar --- */
+        /* --- Category Scroll Bar --- */
         .category-bar {
             display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; margin-bottom: 30px;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
-        .category-bar::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        .category-bar::-webkit-scrollbar { display: none; }
         
         .cat-btn {
             padding: 10px 24px; background: transparent; border: 1px solid rgba(58, 46, 40, 0.3);
@@ -235,7 +235,7 @@
 
     <div class="marquee-container">
         <div class="marquee-content">
-            HANDCRAFTED IN INDIA &nbsp; ✨ &nbsp; BOHEMIAN CHIC &nbsp; ✨ &nbsp; FREE-SPIRITED FASHION &nbsp; ✨ &nbsp; INDIGENOUS FURNISHING &nbsp; ✨ &nbsp; RUSTIC & EARTHY &nbsp; ✨ &nbsp; HANDCRAFTED IN INDIA &nbsp; ✨ &nbsp; BOHEMIAN CHIC
+            HANDCRAFTED IN INDIA &nbsp; ✨ &nbsp; BOHEMIAN CHIC &nbsp; ✨ &nbsp; FREE-SPIRITED FASHION &nbsp; ✨ &nbsp; INDIGENOUS FURNISHINGS &nbsp; ✨ &nbsp; RUSTIC & EARTHY &nbsp; ✨ &nbsp; HANDCRAFTED IN INDIA &nbsp; ✨ &nbsp; BOHEMIAN CHIC
         </div>
     </div>
 
@@ -245,7 +245,7 @@
         <nav id="navbar">
             <a onclick="openPage('home')" class="active-link" data-target="home">Home</a>
             <a onclick="openPage('fashion')" data-target="fashion">Fashion</a>
-            <a onclick="openPage('furnishing')" data-target="furnishing">Furnishing</a>
+            <a onclick="openPage('furnishings')" data-target="furnishings">Furnishings</a>
         </nav>
 
         <div class="header-actions">
@@ -265,7 +265,7 @@
             <div class="hero-content">
                 <h1>Makeover Allover</h1>
                 <p>Earthy, Handcrafted & Unapologetically You</p>
-                <button class="btn-luxury" onclick="openPage('furnishing')">Explore Furnishing</button>
+                <button class="btn-luxury" onclick="openPage('furnishings')">Explore Furnishings</button>
             </div>
         </section>
         
@@ -294,19 +294,18 @@
             <button class="cat-btn active" onclick="filterCategory('All', 'fashion', this)">All Pieces</button>
             <button class="cat-btn" onclick="filterCategory('Dresses & Kaftans', 'fashion', this)">Dresses & Kaftans</button>
             <button class="cat-btn" onclick="filterCategory('Tops & Tunics', 'fashion', this)">Tops & Tunics</button>
-            <button class="cat-btn" onclick="filterCategory('Jewelry', 'fashion', this)">Soulful Adornments</button>
-            <button class="cat-btn" onclick="filterCategory('Footwear', 'fashion', this)">Earthy Footwear</button>
+            <button class="cat-btn" onclick="filterCategory('Co-ord Sets', 'fashion', this)">Co-ord Sets</button>
         </div>
 
         <div class="grid" id="fashionGrid"></div>
     </div>
 
-    <div id="furnishing" class="page">
+    <div id="furnishings" class="page">
         <div class="section-header">
-            <h2 class="page-title">Indigenous Furnishing</h2>
+            <h2 class="page-title">Indigenous Furnishings</h2>
             <div class="filters">
-                <input type="text" placeholder="Search furnishing..." oninput="searchProducts(this.value, 'furnishing')">
-                <select onchange="sortProducts(this.value, 'furnishing')">
+                <input type="text" placeholder="Search furnishings..." oninput="searchProducts(this.value, 'furnishings')">
+                <select onchange="sortProducts(this.value, 'furnishings')">
                     <option value="default">Sort By</option>
                     <option value="low">Price: Low to High</option>
                     <option value="high">Price: High to Low</option>
@@ -314,15 +313,15 @@
             </div>
         </div>
 
-        <div class="category-bar" id="furnish-categories">
-            <button class="cat-btn active" onclick="filterCategory('All', 'furnishing', this)">All Items</button>
-            <button class="cat-btn" onclick="filterCategory('Textiles & Decor', 'furnishing', this)">Textiles & Decor</button>
-            <button class="cat-btn" onclick="filterCategory('Floor Art', 'furnishing', this)">Floor Art</button>
-            <button class="cat-btn" onclick="filterCategory('Accent Furniture', 'furnishing', this)">Accent Furniture</button>
-            <button class="cat-btn" onclick="filterCategory('Planters', 'furnishing', this)">Planters</button>
+        <div class="category-bar" id="furnishings-categories">
+            <button class="cat-btn active" onclick="filterCategory('All', 'furnishings', this)">All Items</button>
+            <button class="cat-btn" onclick="filterCategory('Carpets & Rugs', 'furnishings', this)">Carpets & Rugs</button>
+            <button class="cat-btn" onclick="filterCategory('Handicraft Items', 'furnishings', this)">Handicraft Items</button>
+            <button class="cat-btn" onclick="filterCategory('Accent Furniture', 'furnishings', this)">Accent Furniture</button>
+            <button class="cat-btn" onclick="filterCategory('Decor Items', 'furnishings', this)">Decor Items</button>
         </div>
 
-        <div class="grid" id="furnishGrid"></div>
+        <div class="grid" id="furnishingsGrid"></div>
     </div>
 
     <div class="popup" id="productPopup">
@@ -389,22 +388,20 @@
             document.querySelector('.hamburger').classList.toggle('open');
         }
 
-        // 🌟 UPDATED: Added category tags and extra dummy items
+        // Updated Data based on new categories
         let fashionProducts = [
             { id: 'f1', name: "Rust Block-Print Kurta", price: 4500, category: "Tops & Tunics", img: "https://images.unsplash.com/photo-1583391733958-62507873307b?w=800", hoverImg: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800" },
             { id: 'f2', name: "Indigo Tie-Dye Dress", price: 5200, category: "Dresses & Kaftans", img: "https://images.unsplash.com/photo-1596455607563-ad6193f76b62?w=800", hoverImg: "https://images.unsplash.com/photo-1515347619362-73a11641e411?w=800" },
             { id: 'f3', name: "Earthy Linen Tunic", price: 3800, category: "Tops & Tunics", img: "https://images.unsplash.com/photo-1550639525-c97d455acf70?w=800", hoverImg: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" },
-            { id: 'f4', name: "Mustard Woven Scarf", price: 1800, category: "Jewelry", img: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800", hoverImg: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=800" },
-            { id: 'f5', name: "Tribal Silver Choker", price: 2900, category: "Jewelry", img: "https://images.unsplash.com/photo-1599643478514-4a42045435a2?w=800", hoverImg: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800" },
-            { id: 'f6', name: "Leather Kolhapuri", price: 2200, category: "Footwear", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800", hoverImg: "https://images.unsplash.com/photo-1603487742131-4160c99e1441?w=800" }
+            { id: 'f4', name: "Block Print Lounge Set", price: 4200, category: "Co-ord Sets", img: "https://images.unsplash.com/photo-1599818816480-165fbff19901?w=800", hoverImg: "https://images.unsplash.com/photo-1515347619362-73a11641e411?w=800" } 
         ];
 
-        let furnishProducts = [
-            { id: 'd1', name: "Terracotta Clay Pot", price: 2400, category: "Planters", img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800", hoverImg: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800" },
-            { id: 'd2', name: "Handwoven Jute Rug", price: 8500, category: "Floor Art", img: "https://images.unsplash.com/photo-1534889156217-d643df14f14a?w=800", hoverImg: "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800" },
-            { id: 'd3', name: "Macrame Wall Hanging", price: 3200, category: "Textiles & Decor", img: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=800", hoverImg: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" },
+        let furnishingsProducts = [
+            { id: 'd1', name: "Terracotta Clay Pot", price: 2400, category: "Decor Items", img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800", hoverImg: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800" },
+            { id: 'd2', name: "Handwoven Jute Rug", price: 8500, category: "Carpets & Rugs", img: "https://images.unsplash.com/photo-1534889156217-d643df14f14a?w=800", hoverImg: "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800" },
+            { id: 'd3', name: "Macrame Wall Hanging", price: 3200, category: "Handicraft Items", img: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=800", hoverImg: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" },
             { id: 'd4', name: "Vintage Wooden Stool", price: 6500, category: "Accent Furniture", img: "https://images.unsplash.com/photo-1503602642458-232111445657?w=800", hoverImg: "https://images.unsplash.com/photo-1506898667547-42e22a46e125?w=800" },
-            { id: 'd5', name: "Ceramic Serving Bowl", price: 1500, category: "Textiles & Decor", img: "https://images.unsplash.com/photo-1610348725531-843dcf514a8e?w=800", hoverImg: "https://images.unsplash.com/photo-1574676643209-e5da48d0df54?w=800" },
+            { id: 'd5', name: "Ceramic Serving Bowl", price: 1500, category: "Decor Items", img: "https://images.unsplash.com/photo-1610348725531-843dcf514a8e?w=800", hoverImg: "https://images.unsplash.com/photo-1574676643209-e5da48d0df54?w=800" },
             { id: 'd6', name: "Rattan Armchair", price: 12500, category: "Accent Furniture", img: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800", hoverImg: "https://images.unsplash.com/photo-1592078615290-07fdef134371?w=800" }
         ];
 
@@ -420,36 +417,32 @@
             let activeLink = document.querySelector(`nav a[data-target="${page}"]`);
             if(activeLink) activeLink.classList.add("active-link");
             
-            // Reset filters when switching pages
-            if(page === 'fashion' || page === 'furnishing') {
+            if(page === 'fashion' || page === 'furnishings') {
                 resetFilters(page);
             }
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 🌟 NEW: Filter Function
         function filterCategory(category, type, btnElement) {
-            // Update Active Button Style
-            const parent = document.getElementById(`${type === 'fashion' ? 'fashion-categories' : 'furnish-categories'}`);
+            const parent = document.getElementById(`${type === 'fashion' ? 'fashion-categories' : 'furnishings-categories'}`);
             parent.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
 
-            // Filter the Data
-            let data = type === 'fashion' ? fashionProducts : furnishProducts;
+            let data = type === 'fashion' ? fashionProducts : furnishingsProducts;
             if(category !== 'All') {
                 data = data.filter(p => p.category === category);
             }
             
-            renderCards(type === 'fashion' ? 'fashionGrid' : 'furnishGrid', data);
+            renderCards(type === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', data);
         }
 
         function resetFilters(type) {
-            const parent = document.getElementById(`${type === 'fashion' ? 'fashion-categories' : 'furnish-categories'}`);
+            const parent = document.getElementById(`${type === 'fashion' ? 'fashion-categories' : 'furnishings-categories'}`);
             parent.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            parent.querySelector('.cat-btn').classList.add('active'); // Set 'All' to active
-            const data = type === 'fashion' ? fashionProducts : furnishProducts;
-            renderCards(type === 'fashion' ? 'fashionGrid' : 'furnishGrid', data);
+            parent.querySelector('.cat-btn').classList.add('active'); 
+            const data = type === 'fashion' ? fashionProducts : furnishingsProducts;
+            renderCards(type === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', data);
         }
 
         function renderCards(containerId, products) {
@@ -479,23 +472,23 @@
 
         function initShop() {
             renderCards('fashionGrid', fashionProducts);
-            renderCards('furnishGrid', furnishProducts);
-            renderCards('featuredGrid', [fashionProducts[0], furnishProducts[2], fashionProducts[1]]);
+            renderCards('furnishingsGrid', furnishingsProducts);
+            renderCards('featuredGrid', [fashionProducts[0], furnishingsProducts[2], fashionProducts[1]]);
             updateCart();
         }
 
         function searchProducts(query, category) {
             const q = query.toLowerCase();
-            const data = category === 'fashion' ? fashionProducts : furnishProducts;
+            const data = category === 'fashion' ? fashionProducts : furnishingsProducts;
             const filtered = data.filter(p => p.name.toLowerCase().includes(q));
-            renderCards(category === 'fashion' ? 'fashionGrid' : 'furnishGrid', filtered);
+            renderCards(category === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', filtered);
         }
 
         function sortProducts(order, category) {
-            const data = category === 'fashion' ? [...fashionProducts] : [...furnishProducts];
+            const data = category === 'fashion' ? [...fashionProducts] : [...furnishingsProducts];
             if(order === 'low') data.sort((a,b) => a.price - b.price);
             if(order === 'high') data.sort((a,b) => b.price - a.price);
-            renderCards(category === 'fashion' ? 'fashionGrid' : 'furnishGrid', data);
+            renderCards(category === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', data);
         }
 
         function openPopup(id, name, price, img) {
