@@ -10,10 +10,10 @@
     <style>
         :root {
             /* Earthy, Rustic, Bohemian Palette */
-            --primary: #3A2E28; /* Deep earthy brown */
-            --accent: #C86B47; /* Warm Terracotta / Rust */
+            --primary: #3A2E28; 
+            --accent: #C86B47; 
             --accent-light: #E8A88B;
-            --bg: #F4EFE6; /* Warm rustic beige */
+            --bg: #F4EFE6; 
             --card-bg: #FCF9F2;
             --text-muted: #6B5E55;
             --white: #ffffff;
@@ -39,7 +39,7 @@
         .loader-text { font-family: 'Playfair Display', serif; font-size: 38px; font-style: italic; letter-spacing: 4px; animation: float 2s ease-in-out infinite alternate; }
         @keyframes float { from { transform: translateY(5px); } to { transform: translateY(-5px); } }
 
-        /* --- Infinite Marquee (Boho Vibe) --- */
+        /* --- Infinite Marquee --- */
         .marquee-container {
             background: var(--primary); color: var(--bg);
             padding: 10px 0; overflow: hidden; position: relative;
@@ -73,7 +73,7 @@
         .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
         .hamburger span { width: 30px; height: 2px; background: var(--primary); transition: 0.4s var(--ease); border-radius: 2px; }
 
-        /* --- Hero Section (Earthy/Whimsical) --- */
+        /* --- Hero Section --- */
         .hero {
             position: relative; height: 85vh; display: flex; align-items: center; justify-content: center;
             text-align: center; color: var(--bg); overflow: hidden; background: var(--primary);
@@ -84,8 +84,7 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://images.unsplash.com/photo-1558211583-d26f610c1eb1?w=2000&q=80') center/cover no-repeat;
             animation: kenBurns 30s ease-out infinite alternate;
-            z-index: 0;
-            opacity: 0.8;
+            z-index: 0; opacity: 0.8;
         }
         
         .hero-overlay {
@@ -113,10 +112,27 @@
         /* --- Sections & Grid --- */
         .page { display: none; padding: 60px 5%; max-width: 1500px; margin: auto; animation: fadeIn 0.6s var(--ease); min-height: 70vh; }
         .page.active { display: block; }
-        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; border-bottom: 1px dashed rgba(58, 46, 40, 0.2); padding-bottom: 20px;}
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 1px dashed rgba(58, 46, 40, 0.2); padding-bottom: 20px;}
         .page-title { font-family: 'Playfair Display', serif; font-size: 42px; font-style: italic; color: var(--primary); }
+        
         .filters { display: flex; gap: 20px; }
         .filters select, .filters input { padding: 10px; border: none; border-bottom: 1px solid rgba(58, 46, 40, 0.3); background: transparent; font-family: 'Outfit'; outline: none; color: var(--primary); }
+
+        /* --- 🌟 NEW: Category Scroll Bar --- */
+        .category-bar {
+            display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; margin-bottom: 30px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .category-bar::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        
+        .cat-btn {
+            padding: 10px 24px; background: transparent; border: 1px solid rgba(58, 46, 40, 0.3);
+            border-radius: 30px; color: var(--primary); font-family: 'Outfit'; font-size: 14px;
+            white-space: nowrap; cursor: pointer; transition: 0.3s;
+        }
+        .cat-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .cat-btn.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
 
         /* --- Rustic Product Card --- */
@@ -148,7 +164,6 @@
         .popup-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .popup-info { width: 50%; padding: 50px; display: flex; flex-direction: column; overflow-y: auto; position: relative;}
         
-        /* 🛠️ FIX: Added z-index: 10 to ensure it's clickable above the background */
         .close-popup { position: absolute; top: 20px; right: 25px; font-size: 30px; cursor: pointer; font-weight: 300; color: var(--primary); z-index: 10; }
         
         .popup h2 { font-family: 'Playfair Display', serif; font-size: 34px; font-style: italic; margin-bottom: 10px; color: var(--primary); }
@@ -274,6 +289,15 @@
                 </select>
             </div>
         </div>
+
+        <div class="category-bar" id="fashion-categories">
+            <button class="cat-btn active" onclick="filterCategory('All', 'fashion', this)">All Pieces</button>
+            <button class="cat-btn" onclick="filterCategory('Dresses & Kaftans', 'fashion', this)">Dresses & Kaftans</button>
+            <button class="cat-btn" onclick="filterCategory('Tops & Tunics', 'fashion', this)">Tops & Tunics</button>
+            <button class="cat-btn" onclick="filterCategory('Jewelry', 'fashion', this)">Soulful Adornments</button>
+            <button class="cat-btn" onclick="filterCategory('Footwear', 'fashion', this)">Earthy Footwear</button>
+        </div>
+
         <div class="grid" id="fashionGrid"></div>
     </div>
 
@@ -289,12 +313,20 @@
                 </select>
             </div>
         </div>
+
+        <div class="category-bar" id="furnish-categories">
+            <button class="cat-btn active" onclick="filterCategory('All', 'furnishing', this)">All Items</button>
+            <button class="cat-btn" onclick="filterCategory('Textiles & Decor', 'furnishing', this)">Textiles & Decor</button>
+            <button class="cat-btn" onclick="filterCategory('Floor Art', 'furnishing', this)">Floor Art</button>
+            <button class="cat-btn" onclick="filterCategory('Accent Furniture', 'furnishing', this)">Accent Furniture</button>
+            <button class="cat-btn" onclick="filterCategory('Planters', 'furnishing', this)">Planters</button>
+        </div>
+
         <div class="grid" id="furnishGrid"></div>
     </div>
 
     <div class="popup" id="productPopup">
         <span class="close-popup" onclick="closeAll()">&times;</span>
-        
         <div class="popup-img-wrap">
             <img id="popupImg" src="" alt="Product">
         </div>
@@ -357,19 +389,23 @@
             document.querySelector('.hamburger').classList.toggle('open');
         }
 
-        // Updated Boho/Indian Data
+        // 🌟 UPDATED: Added category tags and extra dummy items
         let fashionProducts = [
-            { id: 'f1', name: "Rust Block-Print Kurta", price: 4500, img: "https://images.unsplash.com/photo-1583391733958-62507873307b?w=800", hoverImg: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800" },
-            { id: 'f2', name: "Indigo Tie-Dye Dress", price: 5200, img: "https://images.unsplash.com/photo-1596455607563-ad6193f76b62?w=800", hoverImg: "https://images.unsplash.com/photo-1515347619362-73a11641e411?w=800" },
-            { id: 'f3', name: "Earthy Linen Tunic", price: 3800, img: "https://images.unsplash.com/photo-1550639525-c97d455acf70?w=800", hoverImg: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" },
-            { id: 'f4', name: "Mustard Woven Scarf", price: 1800, img: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800", hoverImg: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=800" }
+            { id: 'f1', name: "Rust Block-Print Kurta", price: 4500, category: "Tops & Tunics", img: "https://images.unsplash.com/photo-1583391733958-62507873307b?w=800", hoverImg: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800" },
+            { id: 'f2', name: "Indigo Tie-Dye Dress", price: 5200, category: "Dresses & Kaftans", img: "https://images.unsplash.com/photo-1596455607563-ad6193f76b62?w=800", hoverImg: "https://images.unsplash.com/photo-1515347619362-73a11641e411?w=800" },
+            { id: 'f3', name: "Earthy Linen Tunic", price: 3800, category: "Tops & Tunics", img: "https://images.unsplash.com/photo-1550639525-c97d455acf70?w=800", hoverImg: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" },
+            { id: 'f4', name: "Mustard Woven Scarf", price: 1800, category: "Jewelry", img: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800", hoverImg: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=800" },
+            { id: 'f5', name: "Tribal Silver Choker", price: 2900, category: "Jewelry", img: "https://images.unsplash.com/photo-1599643478514-4a42045435a2?w=800", hoverImg: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800" },
+            { id: 'f6', name: "Leather Kolhapuri", price: 2200, category: "Footwear", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800", hoverImg: "https://images.unsplash.com/photo-1603487742131-4160c99e1441?w=800" }
         ];
 
         let furnishProducts = [
-            { id: 'd1', name: "Terracotta Clay Pot", price: 2400, img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800", hoverImg: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800" },
-            { id: 'd2', name: "Handwoven Jute Rug", price: 8500, img: "https://images.unsplash.com/photo-1534889156217-d643df14f14a?w=800", hoverImg: "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800" },
-            { id: 'd3', name: "Macrame Wall Hanging", price: 3200, img: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=800", hoverImg: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" },
-            { id: 'd4', name: "Vintage Wooden Stool", price: 6500, img: "https://images.unsplash.com/photo-1503602642458-232111445657?w=800", hoverImg: "https://images.unsplash.com/photo-1506898667547-42e22a46e125?w=800" }
+            { id: 'd1', name: "Terracotta Clay Pot", price: 2400, category: "Planters", img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800", hoverImg: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800" },
+            { id: 'd2', name: "Handwoven Jute Rug", price: 8500, category: "Floor Art", img: "https://images.unsplash.com/photo-1534889156217-d643df14f14a?w=800", hoverImg: "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800" },
+            { id: 'd3', name: "Macrame Wall Hanging", price: 3200, category: "Textiles & Decor", img: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=800", hoverImg: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" },
+            { id: 'd4', name: "Vintage Wooden Stool", price: 6500, category: "Accent Furniture", img: "https://images.unsplash.com/photo-1503602642458-232111445657?w=800", hoverImg: "https://images.unsplash.com/photo-1506898667547-42e22a46e125?w=800" },
+            { id: 'd5', name: "Ceramic Serving Bowl", price: 1500, category: "Textiles & Decor", img: "https://images.unsplash.com/photo-1610348725531-843dcf514a8e?w=800", hoverImg: "https://images.unsplash.com/photo-1574676643209-e5da48d0df54?w=800" },
+            { id: 'd6', name: "Rattan Armchair", price: 12500, category: "Accent Furniture", img: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800", hoverImg: "https://images.unsplash.com/photo-1592078615290-07fdef134371?w=800" }
         ];
 
         function openPage(page) {
@@ -383,12 +419,48 @@
             document.querySelectorAll("nav a").forEach(link => link.classList.remove("active-link"));
             let activeLink = document.querySelector(`nav a[data-target="${page}"]`);
             if(activeLink) activeLink.classList.add("active-link");
+            
+            // Reset filters when switching pages
+            if(page === 'fashion' || page === 'furnishing') {
+                resetFilters(page);
+            }
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 🌟 NEW: Filter Function
+        function filterCategory(category, type, btnElement) {
+            // Update Active Button Style
+            const parent = document.getElementById(`${type === 'fashion' ? 'fashion-categories' : 'furnish-categories'}`);
+            parent.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Filter the Data
+            let data = type === 'fashion' ? fashionProducts : furnishProducts;
+            if(category !== 'All') {
+                data = data.filter(p => p.category === category);
+            }
+            
+            renderCards(type === 'fashion' ? 'fashionGrid' : 'furnishGrid', data);
+        }
+
+        function resetFilters(type) {
+            const parent = document.getElementById(`${type === 'fashion' ? 'fashion-categories' : 'furnish-categories'}`);
+            parent.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            parent.querySelector('.cat-btn').classList.add('active'); // Set 'All' to active
+            const data = type === 'fashion' ? fashionProducts : furnishProducts;
+            renderCards(type === 'fashion' ? 'fashionGrid' : 'furnishGrid', data);
         }
 
         function renderCards(containerId, products) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
+            
+            if(products.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-style: italic;">No items found in this category right now.</p>`;
+                return;
+            }
+
             products.forEach(p => {
                 container.innerHTML += `
                     <div class="card" onclick='openPopup("${p.id}", "${p.name}", ${p.price}, "${p.img}")'>
@@ -408,7 +480,7 @@
         function initShop() {
             renderCards('fashionGrid', fashionProducts);
             renderCards('furnishGrid', furnishProducts);
-            renderCards('featuredGrid', [fashionProducts[0], furnishProducts[2], furnishProducts[0]]);
+            renderCards('featuredGrid', [fashionProducts[0], furnishProducts[2], fashionProducts[1]]);
             updateCart();
         }
 
