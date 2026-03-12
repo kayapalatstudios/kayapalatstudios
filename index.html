@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
 
 <meta charset="UTF-8">
@@ -15,7 +16,6 @@ body{
 margin:0;
 font-family:Inter;
 background:#F8F6F2;
-color:#111;
 }
 
 header{
@@ -23,23 +23,23 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:18px 6%;
-border-bottom:1px solid #eee;
 background:white;
+border-bottom:1px solid #eee;
 position:sticky;
 top:0;
 z-index:999;
 }
 
 .logo{
-font-family:"Playfair Display";
+font-family:Playfair Display;
 font-size:26px;
 letter-spacing:4px;
 }
 
 nav a{
-margin:0 15px;
-font-size:14px;
+margin:0 14px;
 cursor:pointer;
+font-size:14px;
 text-transform:uppercase;
 }
 
@@ -49,37 +49,33 @@ color:#C6A75E;
 
 .hero{
 height:85vh;
-background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=2000&q=80") center/cover;
+background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?w=2000") center/cover;
 display:flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;
-flex-direction:column;
 text-align:center;
+color:white;
 }
 
 .hero h1{
-font-size:65px;
-font-family:"Playfair Display";
+font-size:60px;
 letter-spacing:6px;
+font-family:Playfair Display;
 margin:0;
 }
 
 .hero p{
 font-size:18px;
-margin:10px 0 20px;
 }
 
 .btn{
 padding:12px 30px;
-border:1px solid black;
+border:1px solid white;
 background:none;
+color:white;
 cursor:pointer;
 letter-spacing:2px;
-}
-
-.btn:hover{
-border-color:#C6A75E;
-color:#C6A75E;
 }
 
 .page{
@@ -91,22 +87,25 @@ margin:auto;
 
 .page.active{
 display:block;
+animation:fade .4s;
+}
+
+@keyframes fade{
+from{opacity:0}
+to{opacity:1}
 }
 
 .page-title{
+font-family:Playfair Display;
 font-size:34px;
-margin-bottom:30px;
-font-family:"Playfair Display";
-}
-
-.search{
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .search input{
 width:100%;
 padding:12px;
 border:1px solid #ddd;
+margin-bottom:30px;
 }
 
 .grid{
@@ -118,18 +117,23 @@ gap:25px;
 .card{
 background:white;
 box-shadow:0 10px 25px rgba(0,0,0,.08);
-cursor:pointer;
+overflow:hidden;
 transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-6px);
+transform:translateY(-5px);
 }
 
 .card img{
 width:100%;
-height:300px;
+height:280px;
 object-fit:cover;
+transition:.4s;
+}
+
+.card:hover img{
+transform:scale(1.05);
 }
 
 .card-content{
@@ -142,33 +146,43 @@ color:#C6A75E;
 
 .cart{
 position:fixed;
-right:-350px;
 top:0;
+right:-340px;
 width:320px;
 height:100%;
 background:white;
-box-shadow:-10px 0 20px rgba(0,0,0,.1);
+box-shadow:-10px 0 20px rgba(0,0,0,.15);
 padding:20px;
 transition:.3s;
+z-index:1001;
 overflow:auto;
-z-index:1000;
 }
 
 .cart.active{
 right:0;
 }
 
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.3);
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:1000;
+}
+
+.overlay.active{
+opacity:1;
+pointer-events:auto;
+}
+
 .cart-item{
 border-bottom:1px solid #eee;
 padding:10px 0;
-}
-
-@media(max-width:768px){
-
-.hero h1{
-font-size:40px;
-}
-
 }
 
 </style>
@@ -193,7 +207,8 @@ font-size:40px;
 </header>
 
 
-<!-- HOME -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
 
 <div id="home" class="page active">
 
@@ -209,11 +224,9 @@ font-size:40px;
 </div>
 
 
-<!-- FASHION -->
-
 <div id="fashion" class="page">
 
-<h2 class="page-title">Fashion Collection</h2>
+<h2 class="page-title">Fashion</h2>
 
 <div class="search">
 <input type="text" placeholder="Search fashion..." onkeyup="searchProducts(this.value,'fashion')">
@@ -224,11 +237,9 @@ font-size:40px;
 </div>
 
 
-<!-- DECOR -->
-
 <div id="decor" class="page">
 
-<h2 class="page-title">Home Decor</h2>
+<h2 class="page-title">Decor</h2>
 
 <div class="search">
 <input type="text" placeholder="Search decor..." onkeyup="searchProducts(this.value,'decor')">
@@ -238,8 +249,6 @@ font-size:40px;
 
 </div>
 
-
-<!-- CART -->
 
 <div class="cart" id="cartBox">
 
@@ -256,6 +265,8 @@ font-size:40px;
 
 function openPage(page){
 
+closeCart()
+
 document.querySelectorAll(".page").forEach(p=>{
 p.classList.remove("active")
 })
@@ -266,7 +277,6 @@ window.scrollTo(0,0)
 
 }
 
-/* PRODUCTS */
 
 const fashionProducts=[
 
@@ -287,11 +297,9 @@ const decorProducts=[
 
 function loadProducts(){
 
-const fGrid=document.getElementById("fashionGrid")
-
 fashionProducts.forEach(p=>{
 
-fGrid.innerHTML+=`
+fashionGrid.innerHTML+=`
 
 <div class="card">
 
@@ -311,12 +319,9 @@ fGrid.innerHTML+=`
 
 })
 
-
-const dGrid=document.getElementById("decorGrid")
-
 decorProducts.forEach(p=>{
 
-dGrid.innerHTML+=`
+decorGrid.innerHTML+=`
 
 <div class="card">
 
@@ -341,14 +346,11 @@ dGrid.innerHTML+=`
 loadProducts()
 
 
-/* SEARCH */
-
 function searchProducts(q,cat){
 
 q=q.toLowerCase()
 
 let list=cat=="fashion"?fashionProducts:decorProducts
-
 let grid=cat=="fashion"?fashionGrid:decorGrid
 
 grid.innerHTML=""
@@ -380,8 +382,6 @@ grid.innerHTML+=`
 }
 
 
-/* CART */
-
 function getCart(){
 return JSON.parse(localStorage.getItem("kpCart"))||[]
 }
@@ -398,7 +398,6 @@ let cart=getCart()
 let item=cart.find(i=>i.name===name)
 
 if(item) item.qty++
-
 else cart.push({name,price,qty:1})
 
 saveCart(cart)
@@ -437,8 +436,8 @@ items.innerHTML+=`
 
 })
 
-document.getElementById("cartTotal").innerText="Total: ₹"+total
-document.getElementById("cartCount").innerText=count
+cartTotal.innerText="Total: ₹"+total
+cartCount.innerText=count
 
 }
 
@@ -452,11 +451,26 @@ saveCart(cart)
 
 }
 
+
 function toggleCart(){
 
-document.getElementById("cartBox").classList.toggle("active")
+cartBox.classList.toggle("active")
+overlay.classList.toggle("active")
 
 }
+
+function closeCart(){
+
+cartBox.classList.remove("active")
+overlay.classList.remove("active")
+
+}
+
+document.addEventListener("keydown",e=>{
+
+if(e.key==="Escape") closeCart()
+
+})
 
 updateCart()
 
