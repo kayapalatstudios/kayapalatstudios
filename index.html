@@ -1,461 +1,320 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KAYAPALAT</title>
+<title>Kayapalat</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-font-family:Inter;
-background:#F8F6F2;
+font-family:Poppins;
+background:white;
 }
 
 header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 6%;
+padding:18px 20px;
 background:white;
-border-bottom:1px solid #eee;
 position:sticky;
 top:0;
-z-index:999;
+z-index:100;
 }
 
 .logo{
 font-family:Playfair Display;
-font-size:26px;
-letter-spacing:4px;
+font-size:22px;
+letter-spacing:5px;
 }
 
-nav a{
-margin:0 14px;
+.menu-icon,.cart-icon{
+font-size:22px;
 cursor:pointer;
-font-size:14px;
-text-transform:uppercase;
+}
+
+.mobileMenu{
+position:fixed;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:35px;
+font-size:22px;
+letter-spacing:3px;
+transition:.4s;
+z-index:1000;
+}
+
+.mobileMenu.active{
+left:0;
 }
 
 .hero{
-height:85vh;
+height:90vh;
 background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?w=2000") center/cover;
+position:relative;
 display:flex;
-flex-direction:column;
 align-items:center;
 justify-content:center;
-color:white;
+flex-direction:column;
 text-align:center;
+color:white;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
 }
 
 .hero h1{
-font-size:60px;
-letter-spacing:6px;
+position:relative;
+font-size:55px;
+letter-spacing:8px;
 font-family:Playfair Display;
+margin:0;
+}
+
+.hero p{
+position:relative;
+margin-top:10px;
+font-size:18px;
+opacity:.9;
+}
+
+.luxury-btn{
+position:relative;
+margin-top:20px;
+padding:14px 40px;
+border:1px solid #C6A75E;
+background:transparent;
+color:white;
+letter-spacing:3px;
+font-size:13px;
+cursor:pointer;
+transition:.3s;
+}
+
+.luxury-btn:hover{
+background:#C6A75E;
+color:black;
 }
 
 .page{
 display:none;
-padding:60px 6%;
-max-width:1300px;
-margin:auto;
+padding:40px 20px;
 }
 
 .page.active{
 display:block;
 }
 
-.page-title{
-font-family:Playfair Display;
-font-size:34px;
-margin-bottom:30px;
-}
-
-.search input{
-width:100%;
-padding:12px;
-border:1px solid #ddd;
-margin-bottom:30px;
-}
-
-.grid{
+.products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
 }
 
-.card{
-background:white;
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-overflow:hidden;
-cursor:pointer;
-position:relative;
+.product{
+border:1px solid #eee;
+padding:10px;
+text-align:center;
 }
 
-.card img{
+.product img{
 width:100%;
-height:280px;
-object-fit:cover;
-transition:.4s;
 }
 
-.card:hover img{
-transform:scale(1.1);
-}
-
-.card-content{
-padding:15px;
-}
-
-.price{
-color:#C6A75E;
-}
-
-.wishlist{
-position:absolute;
-top:10px;
-right:10px;
-font-size:20px;
+button{
 cursor:pointer;
+padding:8px 15px;
+margin-top:10px;
 }
 
 .cart{
 position:fixed;
-right:-340px;
+right:-350px;
 top:0;
-width:320px;
+width:300px;
 height:100%;
 background:white;
-box-shadow:-10px 0 20px rgba(0,0,0,.2);
+box-shadow:-3px 0 10px rgba(0,0,0,.1);
 padding:20px;
-transition:.3s;
-overflow:auto;
-z-index:1001;
+transition:.4s;
+z-index:999;
 }
 
 .cart.active{
 right:0;
 }
 
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.3);
-opacity:0;
-pointer-events:none;
-transition:.3s;
-}
-
-.overlay.active{
-opacity:1;
-pointer-events:auto;
-}
-
-.popup{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:30px;
-width:90%;
-max-width:500px;
-display:none;
-z-index:1002;
-}
-
-.popup img{
-width:100%;
-}
-
-.popup.active{
-display:block;
-}
-
 </style>
-
 </head>
 
 <body>
 
 <header>
 
+<div class="menu-icon" onclick="toggleMenu()">☰</div>
+
 <div class="logo">KAYAPALAT</div>
 
-<nav>
-
-<a onclick="openPage('home')">Home</a>
-<a onclick="openPage('fashion')">Fashion</a>
-<a onclick="openPage('decor')">Decor</a>
-<a onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a>
-
-</nav>
+<div class="cart-icon" onclick="toggleCart()">🛒 (<span id="cartCount">0</span>)</div>
 
 </header>
 
+<div class="mobileMenu" id="mobileMenu">
 
-<div class="overlay" id="overlay" onclick="closeAll()"></div>
+<div onclick="openPage('home')">HOME</div>
+<div onclick="openPage('fashion')">FASHION</div>
+<div onclick="openPage('decor')">DECOR</div>
+<div onclick="toggleCart()">CART</div>
 
+</div>
+
+
+<!-- HOME -->
 
 <div id="home" class="page active">
 
-<section class="hero">
+<div class="hero">
 
 <h1>KAYAPALAT</h1>
 <p>Makeover Allover</p>
 
-<button onclick="openPage('fashion')">Shop Fashion</button>
-
-</section>
+<button class="luxury-btn" onclick="openPage('fashion')">
+SHOP FASHION
+</button>
 
 </div>
 
+</div>
+
+
+<!-- FASHION -->
 
 <div id="fashion" class="page">
 
-<h2 class="page-title">Fashion</h2>
+<h2>Fashion Collection</h2>
 
-<div class="search">
-<input type="text" placeholder="Search fashion..." onkeyup="searchProducts(this.value,'fashion')">
+<div class="products">
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
+<p>Classic Shirt</p>
+<button onclick="addToCart('Classic Shirt')">Add to Cart</button>
 </div>
 
-<div class="grid" id="fashionGrid"></div>
+<div class="product">
+<img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f">
+<p>Luxury Jacket</p>
+<button onclick="addToCart('Luxury Jacket')">Add to Cart</button>
+</div>
 
 </div>
 
+</div>
+
+
+<!-- DECOR -->
 
 <div id="decor" class="page">
 
-<h2 class="page-title">Decor</h2>
+<h2>Decor Collection</h2>
 
-<div class="search">
-<input type="text" placeholder="Search decor..." onkeyup="searchProducts(this.value,'decor')">
+<div class="products">
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85">
+<p>Modern Lamp</p>
+<button onclick="addToCart('Modern Lamp')">Add to Cart</button>
 </div>
 
-<div class="grid" id="decorGrid"></div>
-
+<div class="product">
+<img src="https://images.unsplash.com/photo-1493666438817-866a91353ca9">
+<p>Wood Chair</p>
+<button onclick="addToCart('Wood Chair')">Add to Cart</button>
 </div>
-
-
-<div class="cart" id="cartBox">
-
-<h2>Your Cart</h2>
-
-<div id="cartItems"></div>
-
-<h3 id="cartTotal"></h3>
 
 </div>
 
+</div>
 
-<div class="popup" id="productPopup">
 
-<img id="popupImg">
+<!-- CART -->
 
-<h2 id="popupName"></h2>
+<div class="cart" id="cart">
 
-<p id="popupPrice"></p>
+<h2>Cart</h2>
 
-<button id="popupCartBtn">Add to Cart</button>
+<ul id="cartItems"></ul>
 
 </div>
+
 
 
 <script>
 
-function openPage(page){
+let cart=[]
+let cartCount=document.getElementById("cartCount")
+let cartItems=document.getElementById("cartItems")
 
-closeAll()
+function addToCart(item){
+
+cart.push(item)
+
+cartCount.innerText=cart.length
+
+let li=document.createElement("li")
+li.innerText=item
+
+cartItems.appendChild(li)
+
+}
+
+function toggleCart(){
+
+cart.classList.toggle("active")
+
+mobileMenu.classList.remove("active")
+
+}
+
+function toggleMenu(){
+
+mobileMenu.classList.toggle("active")
+
+}
+
+function openPage(page){
 
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
 
 document.getElementById(page).classList.add("active")
 
+mobileMenu.classList.remove("active")
+
+cart.classList.remove("active")
+
 window.scrollTo(0,0)
 
 }
-
-
-const fashionProducts=[
-{name:"Classic Dress",price:12000,img:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800"},
-{name:"Silk Kurta",price:9500,img:"https://images.unsplash.com/photo-1520975922323-7b73b6b0b5d5?w=800"}
-]
-
-const decorProducts=[
-{name:"Minimal Vase",price:8400,img:"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800"},
-{name:"Stone Sculpture",price:14000,img:"https://images.unsplash.com/photo-1616627451515-cbc80e5ece35?w=800"}
-]
-
-
-function loadProducts(){
-
-fashionProducts.forEach(p=>{
-fashionGrid.innerHTML+=cardHTML(p)
-})
-
-decorProducts.forEach(p=>{
-decorGrid.innerHTML+=cardHTML(p)
-})
-
-}
-
-function cardHTML(p){
-
-return `
-
-<div class="card">
-
-<div class="wishlist" onclick="toggleWish(event)">♡</div>
-
-<img src="${p.img}" onclick='openPopup("${p.name}",${p.price},"${p.img}")'>
-
-<div class="card-content">
-
-<h3>${p.name}</h3>
-
-<p class="price">₹${p.price}</p>
-
-<button onclick='addToCart("${p.name}",${p.price})'>Add</button>
-
-</div>
-
-</div>
-
-`
-
-}
-
-loadProducts()
-
-
-function toggleWish(e){
-
-e.target.innerText = e.target.innerText=="♡" ? "♥" : "♡"
-
-}
-
-
-function openPopup(name,price,img){
-
-overlay.classList.add("active")
-
-productPopup.classList.add("active")
-
-popupImg.src=img
-popupName.innerText=name
-popupPrice.innerText="₹"+price
-
-popupCartBtn.onclick=function(){
-addToCart(name,price)
-}
-
-}
-
-
-function closeAll(){
-
-cartBox.classList.remove("active")
-
-productPopup.classList.remove("active")
-
-overlay.classList.remove("active")
-
-}
-
-
-function toggleCart(){
-
-overlay.classList.toggle("active")
-
-cartBox.classList.toggle("active")
-
-}
-
-
-function getCart(){
-return JSON.parse(localStorage.getItem("kpCart"))||[]
-}
-
-function saveCart(c){
-localStorage.setItem("kpCart",JSON.stringify(c))
-updateCart()
-}
-
-function addToCart(name,price){
-
-let cart=getCart()
-
-let item=cart.find(i=>i.name===name)
-
-if(item) item.qty++
-else cart.push({name,price,qty:1})
-
-saveCart(cart)
-
-}
-
-
-function updateCart(){
-
-let cart=getCart()
-
-cartItems.innerHTML=""
-
-let total=0
-let count=0
-
-cart.forEach((i,index)=>{
-
-total+=i.price*i.qty
-count+=i.qty
-
-cartItems.innerHTML+=`
-
-<div>
-
-<p>${i.name}</p>
-
-<p>${i.qty} x ₹${i.price}</p>
-
-<button onclick="removeItem(${index})">Remove</button>
-
-</div>
-
-`
-
-})
-
-cartTotal.innerText="Total ₹"+total
-cartCount.innerText=count
-
-}
-
-function removeItem(i){
-
-let cart=getCart()
-
-cart.splice(i,1)
-
-saveCart(cart)
-
-}
-
-updateCart()
-
-document.addEventListener("keydown",e=>{
-
-if(e.key==="Escape") closeAll()
-
-})
 
 </script>
 
