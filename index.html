@@ -263,7 +263,10 @@
             <p class="popup-price" id="popupPrice">₹0</p>
             <p style="font-size: 13px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; color: var(--text-muted);">Select Size</p>
             
-            <div class="size-selector" id="popupSizes"></div> <p class="popup-desc" id="popupDesc"></p> <button class="add-to-cart-sticky" id="popupCartBtn">Add to Bag</button>
+            <div class="size-selector" id="popupSizes"></div> 
+            
+            <p class="popup-desc" id="popupDesc"></p> 
+            <button class="add-to-cart-sticky" id="popupCartBtn">Add to Bag</button>
         </div>
     </div>
 
@@ -288,7 +291,7 @@
     </footer>
 
     <script>
-        // Your Live Google Sheet CSV Links
+        // Your Exact Live Google Sheet CSV Links
         const FASHION_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=0&single=true&output=csv";
         const FURNISHINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=809165328&single=true&output=csv";
 
@@ -307,16 +310,17 @@
             }
         }
 
-        // CSV Parser Logic
+        // 🌟 Bulletproof CSV Parser Logic 
         function parseCSV(str) {
             const result = [];
             const rows = str.split('\n');
             if(rows.length < 2) return result;
-            const headers = rows[0].split(',').map(h => h.trim());
+            
+            // Sabhi headers ko uppercase mein convert kar diya taaki case ka koi issue na aaye
+            const headers = rows[0].split(',').map(h => h.trim().toUpperCase());
             
             for(let i=1; i<rows.length; i++) {
                 if(!rows[i].trim()) continue;
-                // Regex to perfectly split by commas, ignoring commas inside quotes
                 let currentline = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 const obj = {};
                 
@@ -326,15 +330,16 @@
                         val = val.substring(1, val.length - 1).replace(/""/g, '"');
                     }
                     
-                    // Map Sheet Columns to Code Variables
-                    if(headers[j] === "ID") obj.id = val;
-                    if(headers[j] === "Category") obj.category = val;
-                    if(headers[j] === "Name") obj.name = val;
-                    if(headers[j] === "Price") obj.price = parseInt(val.replace(/[^0-9]/g, '')) || 0;
-                    if(headers[j] === "Sizes") obj.sizes = val;
-                    if(headers[j] === "Description") obj.desc = val;
-                    if(headers[j] === "Image_Main") obj.img = val;
-                    if(headers[j] === "Image_Hover") obj.hoverImg = val;
+                    let h = headers[j];
+                    // Map Sheet Columns (Capital me check kar rahe hain)
+                    if(h === "ID") obj.id = val;
+                    if(h === "CATEGORY") obj.category = val;
+                    if(h === "NAME") obj.name = val;
+                    if(h === "PRICE") obj.price = parseInt(val.replace(/[^0-9]/g, '')) || 0;
+                    if(h === "SIZE" || h === "SIZES") obj.sizes = val; 
+                    if(h === "DESCRIPTION" || h === "DESC") obj.desc = val;
+                    if(h === "IMAGE_MAIN") obj.img = val;
+                    if(h === "IMAGE_HOVER") obj.hoverImg = val;
                 }
                 if(obj.id) result.push(obj);
             }
@@ -343,31 +348,32 @@
 
         // Initialize Shop Data
         window.addEventListener('load', async () => {
-            // Fetch live data from sheets
-            fashionProducts = await fetchGoogleSheetData(FASHION_URL);
-            furnishingsProducts = await fetchGoogleSheetData(FURNISHINGS_URL);
+            try {
+                fashionProducts = await fetchGoogleSheetData(FASHION_URL);
+                furnishingsProducts = await fetchGoogleSheetData(FURNISHINGS_URL);
 
-            // Render all cards
-            renderCards('fashionGrid', fashionProducts);
-            renderCards('furnishingsGrid', furnishingsProducts);
-            
-            // Create Featured items for Home Page (Mix of both)
-            let featured = [];
-            if(fashionProducts.length > 0) featured.push(fashionProducts[0]);
-            if(furnishingsProducts.length > 0) featured.push(furnishingsProducts[0]);
-            if(fashionProducts.length > 1) featured.push(fashionProducts[1]);
-            renderCards('featuredGrid', featured);
+                renderCards('fashionGrid', fashionProducts);
+                renderCards('furnishingsGrid', furnishingsProducts);
+                
+                let featured = [];
+                if(fashionProducts.length > 0) featured.push(fashionProducts[0]);
+                if(furnishingsProducts.length > 0) featured.push(furnishingsProducts[0]);
+                if(fashionProducts.length > 1) featured.push(fashionProducts[1]);
+                renderCards('featuredGrid', featured);
 
-            updateCart();
-
-            // Cinematic Preloader Logic (Hides after data is loaded)
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('phase-ivory');
+                updateCart();
+            } catch(e) {
+                console.log("Error loading products", e);
+            } finally {
+                // Preloader Logic (Hides strictly after attempting data load)
                 setTimeout(() => {
-                    document.getElementById('preloader').style.opacity = '0';
-                    document.getElementById('preloader').style.visibility = 'hidden';
-                }, 1000);
-            }, 800);
+                    document.getElementById('preloader').classList.add('phase-ivory');
+                    setTimeout(() => {
+                        document.getElementById('preloader').style.opacity = '0';
+                        document.getElementById('preloader').style.visibility = 'hidden';
+                    }, 1000);
+                }, 800);
+            }
         });
 
         // UI Interactions
@@ -385,6 +391,7 @@
         function openPage(page) {
             closeAll();
             document.getElementById('navbar').classList.remove('open');
+            document.querySelector('.hamburger').classList.remove('open');
             document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
             document.getElementById(page).classList.add("active");
             document.querySelectorAll("nav a").forEach(link => link.classList.remove("active-link"));
@@ -417,22 +424,24 @@
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             
-            if(products.length === 0) {
+            if(!products || products.length === 0) {
                 container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-style: italic;">We're updating our collection. New items arriving soon.</p>`;
                 return;
             }
 
             products.forEach(p => {
                 const hoverHtml = p.hoverImg ? `<img class="img-hover" src="${p.hoverImg}" alt="Hover View">` : '';
+                const displayPrice = p.price !== undefined ? p.price.toLocaleString('en-IN') : '0';
+                
                 container.innerHTML += `
                     <div class="card" onclick="openPopup('${p.id}')">
                         <div class="img-container">
-                            <img class="img-main" src="${p.img}" onerror="this.src='https://via.placeholder.com/400x500?text=Kayapalat'">
+                            <img class="img-main" src="${p.img || 'https://via.placeholder.com/400x500?text=Kayapalat'}" onerror="this.src='https://via.placeholder.com/400x500?text=Kayapalat'">
                             ${hoverHtml}
                         </div>
                         <div class="card-content">
-                            <h3>${p.name}</h3>
-                            <p class="price">₹${p.price.toLocaleString('en-IN')}</p>
+                            <h3>${p.name || 'Beautiful Item'}</h3>
+                            <p class="price">₹${displayPrice}</p>
                         </div>
                     </div>
                 `;
@@ -442,32 +451,29 @@
         function searchProducts(query, category) {
             const q = query.toLowerCase();
             const data = category === 'fashion' ? fashionProducts : furnishingsProducts;
-            const filtered = data.filter(p => p.name.toLowerCase().includes(q));
+            const filtered = data.filter(p => (p.name || '').toLowerCase().includes(q));
             renderCards(category === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', filtered);
         }
 
         function sortProducts(order, category) {
             const data = category === 'fashion' ? [...fashionProducts] : [...furnishingsProducts];
-            if(order === 'low') data.sort((a,b) => a.price - b.price);
-            if(order === 'high') data.sort((a,b) => b.price - a.price);
+            if(order === 'low') data.sort((a,b) => (a.price||0) - (b.price||0));
+            if(order === 'high') data.sort((a,b) => (b.price||0) - (a.price||0));
             renderCards(category === 'fashion' ? 'fashionGrid' : 'furnishingsGrid', data);
         }
 
         function openPopup(id) {
-            // Find product from both arrays
             const product = [...fashionProducts, ...furnishingsProducts].find(item => item.id === id);
             if(!product) return;
 
             document.getElementById('overlay').classList.add("active");
             document.getElementById('productPopup').classList.add("active");
-            document.getElementById('popupImg').src = product.img;
-            document.getElementById('popupName').innerText = product.name;
-            document.getElementById('popupPrice').innerText = "₹" + product.price.toLocaleString('en-IN');
+            document.getElementById('popupImg').src = product.img || 'https://via.placeholder.com/400x500?text=Kayapalat';
+            document.getElementById('popupName').innerText = product.name || 'Beautiful Item';
+            document.getElementById('popupPrice').innerText = "₹" + (product.price !== undefined ? product.price.toLocaleString('en-IN') : '0');
             
-            // Set Description
             document.getElementById('popupDesc').innerText = product.desc || 'Embrace the imperfections and soulful charm of our handcrafted pieces.';
 
-            // Render Dynamic Sizes based on Google Sheet Data
             const sizesContainer = document.getElementById('popupSizes');
             sizesContainer.innerHTML = '';
             if(product.sizes) {
@@ -497,6 +503,7 @@
 
         function toggleCart() {
             document.getElementById('navbar').classList.remove('open');
+            document.querySelector('.hamburger').classList.remove('open');
             document.getElementById('overlay').classList.toggle("active");
             document.getElementById('cartBox').classList.toggle("active");
         }
@@ -508,7 +515,7 @@
             let cart = getCart();
             let item = cart.find(i => i.id === id);
             if(item) item.qty++;
-            else cart.push({ id, name, price, img, qty: 1 });
+            else cart.push({ id, name: name||'Item', price: price||0, img, qty: 1 });
             saveCart(cart);
         }
 
@@ -526,7 +533,7 @@
                     count += i.qty;
                     cartItems.innerHTML += `
                         <div class="cart-item">
-                            <img src="${i.img}" alt="${i.name}">
+                            <img src="${i.img || 'https://via.placeholder.com/400x500?text=Kayapalat'}" alt="Item">
                             <div class="cart-item-details">
                                 <h4 style="color: var(--primary);">${i.name}</h4>
                                 <p style="color:var(--accent); font-size:14px; margin:5px 0; font-weight: 500;">₹${i.price.toLocaleString('en-IN')}</p>
@@ -539,12 +546,6 @@
             }
             document.getElementById('cartTotal').innerText = "₹" + total.toLocaleString('en-IN');
             document.getElementById('cartCount').innerText = `(${count})`;
-        }
-
-        function removeItem(index) {
-            let cart = getCart();
-            cart.splice(index, 1);
-            saveCart(cart);
         }
     </script>
 </body>
