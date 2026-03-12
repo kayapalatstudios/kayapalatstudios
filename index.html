@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KAYAPALAT | Makeover Allover</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Inter;
+background:#F8F6F2;
+color:#111;
+}
+
+/* NAVBAR */
+
+header{
+position:fixed;
+width:100%;
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+z-index:1000;
+}
+
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+}
+
+.logo{
+font-family:"Playfair Display";
+font-size:28px;
+letter-spacing:4px;
+}
+
+nav a{
+margin:0 15px;
+text-decoration:none;
+color:black;
+font-size:14px;
+}
+
+.icons{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+#cartCount{
+background:black;
+color:white;
+padding:4px 8px;
+border-radius:20px;
+font-size:12px;
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000") center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:80px;
+font-family:"Playfair Display";
+letter-spacing:6px;
+}
+
+.hero p{
+font-size:20px;
+margin-top:-10px;
+}
+
+.btn{
+padding:12px 30px;
+border:1px solid black;
+background:none;
+margin:10px;
+cursor:pointer;
+}
+
+/* PRODUCTS */
+
+.featured{
+padding:120px 40px;
+text-align:center;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+margin-top:40px;
+}
+
+.card{
+background:white;
+padding:20px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+transition:0.3s;
+opacity:0;
+transform:translateY(50px);
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.addCart{
+margin-top:10px;
+padding:10px;
+border:none;
+background:black;
+color:white;
+cursor:pointer;
+width:100%;
+}
+
+/* VAULT */
+
+.vault{
+background:black;
+color:white;
+text-align:center;
+padding:120px 20px;
+}
+
+.vaultBtn{
+padding:15px 40px;
+border:1px solid gold;
+background:none;
+color:gold;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+background:#eee;
+padding:60px 40px;
+}
+
+.footer{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+}
+
+footer a{
+display:block;
+text-decoration:none;
+color:#444;
+margin:5px 0;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+nav{
+display:none;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">KAYAPALAT</div>
+
+<nav>
+<a href="#">Women</a>
+<a href="#">Home Decor</a>
+<a href="#">Story</a>
+</nav>
+
+<div class="icons">
+Cart <span id="cartCount">0</span>
+</div>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<div>
+
+<h1>KAYAPALAT</h1>
+
+<p>Makeover Allover</p>
+
+<button class="btn">Shop Women</button>
+<button class="btn">Shop Home</button>
+
+</div>
+
+</section>
+
+
+<section class="featured">
+
+<h2>Featured Collection</h2>
+
+<div class="products">
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1520975922323-7b73b6b0b5d5?q=80&w=800">
+
+<h3>Silk Kurta</h3>
+
+<p>$120</p>
+
+<button class="addCart">Add To Cart</button>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1505692794403-34d4982f88aa?q=80&w=800">
+
+<h3>Luxury Cushion</h3>
+
+<p>$60</p>
+
+<button class="addCart">Add To Cart</button>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1495121605193-b116b5b09a96?q=80&w=800">
+
+<h3>Designer Dress</h3>
+
+<p>$180</p>
+
+<button class="addCart">Add To Cart</button>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1616627451515-cbc80e5ece35?q=80&w=800">
+
+<h3>Decor Sculpture</h3>
+
+<p>$240</p>
+
+<button class="addCart">Add To Cart</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="vault">
+
+<h2>Antique Vault</h2>
+
+<p>Museum grade artifacts curated for modern collectors.</p>
+
+<button class="vaultBtn">Enter Vault</button>
+
+</section>
+
+
+<footer>
+
+<div class="footer">
+
+<div>
+
+<h3>KAYAPALAT</h3>
+
+<p>Makeover Allover</p>
+
+</div>
+
+<div>
+
+<h4>Explore</h4>
+
+<a href="#">Women</a>
+<a href="#">Decor</a>
+<a href="#">Story</a>
+
+</div>
+
+<div>
+
+<h4>Support</h4>
+
+<a href="#">Contact</a>
+<a href="#">Shipping</a>
+<a href="#">Privacy</a>
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* CART */
+
+let cart = 0
+
+document.querySelectorAll(".addCart").forEach(btn=>{
+
+btn.onclick=()=>{
+
+cart++
+
+document.getElementById("cartCount").innerText = cart
+
+}
+
+})
+
+
+/* SCROLL ANIMATION */
+
+const cards = document.querySelectorAll(".card")
+
+window.addEventListener("scroll",()=>{
+
+cards.forEach(card=>{
+
+const top = card.getBoundingClientRect().top
+
+if(top < window.innerHeight - 100){
+
+card.style.opacity=1
+card.style.transform="translateY(0)"
+
+}
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
