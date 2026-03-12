@@ -43,10 +43,6 @@ font-size:14px;
 text-transform:uppercase;
 }
 
-nav a:hover{
-color:#C6A75E;
-}
-
 .hero{
 height:85vh;
 background:url("https://images.unsplash.com/photo-1600607686527-6fb886090705?w=2000") center/cover;
@@ -54,28 +50,14 @@ display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-text-align:center;
 color:white;
+text-align:center;
 }
 
 .hero h1{
 font-size:60px;
 letter-spacing:6px;
 font-family:Playfair Display;
-margin:0;
-}
-
-.hero p{
-font-size:18px;
-}
-
-.btn{
-padding:12px 30px;
-border:1px solid white;
-background:none;
-color:white;
-cursor:pointer;
-letter-spacing:2px;
 }
 
 .page{
@@ -87,18 +69,12 @@ margin:auto;
 
 .page.active{
 display:block;
-animation:fade .4s;
-}
-
-@keyframes fade{
-from{opacity:0}
-to{opacity:1}
 }
 
 .page-title{
 font-family:Playfair Display;
 font-size:34px;
-margin-bottom:25px;
+margin-bottom:30px;
 }
 
 .search input{
@@ -118,11 +94,8 @@ gap:25px;
 background:white;
 box-shadow:0 10px 25px rgba(0,0,0,.08);
 overflow:hidden;
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
+cursor:pointer;
+position:relative;
 }
 
 .card img{
@@ -133,7 +106,7 @@ transition:.4s;
 }
 
 .card:hover img{
-transform:scale(1.05);
+transform:scale(1.1);
 }
 
 .card-content{
@@ -144,18 +117,26 @@ padding:15px;
 color:#C6A75E;
 }
 
+.wishlist{
+position:absolute;
+top:10px;
+right:10px;
+font-size:20px;
+cursor:pointer;
+}
+
 .cart{
 position:fixed;
-top:0;
 right:-340px;
+top:0;
 width:320px;
 height:100%;
 background:white;
-box-shadow:-10px 0 20px rgba(0,0,0,.15);
+box-shadow:-10px 0 20px rgba(0,0,0,.2);
 padding:20px;
 transition:.3s;
-z-index:1001;
 overflow:auto;
+z-index:1001;
 }
 
 .cart.active{
@@ -172,7 +153,6 @@ background:rgba(0,0,0,.3);
 opacity:0;
 pointer-events:none;
 transition:.3s;
-z-index:1000;
 }
 
 .overlay.active{
@@ -180,9 +160,25 @@ opacity:1;
 pointer-events:auto;
 }
 
-.cart-item{
-border-bottom:1px solid #eee;
-padding:10px 0;
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+width:90%;
+max-width:500px;
+display:none;
+z-index:1002;
+}
+
+.popup img{
+width:100%;
+}
+
+.popup.active{
+display:block;
 }
 
 </style>
@@ -207,7 +203,7 @@ padding:10px 0;
 </header>
 
 
-<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
 
 
 <div id="home" class="page active">
@@ -217,7 +213,7 @@ padding:10px 0;
 <h1>KAYAPALAT</h1>
 <p>Makeover Allover</p>
 
-<button class="btn" onclick="openPage('fashion')">Shop Fashion</button>
+<button onclick="openPage('fashion')">Shop Fashion</button>
 
 </section>
 
@@ -261,15 +257,26 @@ padding:10px 0;
 </div>
 
 
+<div class="popup" id="productPopup">
+
+<img id="popupImg">
+
+<h2 id="popupName"></h2>
+
+<p id="popupPrice"></p>
+
+<button id="popupCartBtn">Add to Cart</button>
+
+</div>
+
+
 <script>
 
 function openPage(page){
 
-closeCart()
+closeAll()
 
-document.querySelectorAll(".page").forEach(p=>{
-p.classList.remove("active")
-})
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
 
 document.getElementById(page).classList.add("active")
 
@@ -279,53 +286,37 @@ window.scrollTo(0,0)
 
 
 const fashionProducts=[
-
 {name:"Classic Dress",price:12000,img:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800"},
-
 {name:"Silk Kurta",price:9500,img:"https://images.unsplash.com/photo-1520975922323-7b73b6b0b5d5?w=800"}
-
 ]
 
 const decorProducts=[
-
 {name:"Minimal Vase",price:8400,img:"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800"},
-
 {name:"Stone Sculpture",price:14000,img:"https://images.unsplash.com/photo-1616627451515-cbc80e5ece35?w=800"}
-
 ]
 
 
 function loadProducts(){
 
 fashionProducts.forEach(p=>{
-
-fashionGrid.innerHTML+=`
-
-<div class="card">
-
-<img src="${p.img}">
-
-<div class="card-content">
-
-<h3>${p.name}</h3>
-
-<p class="price">₹${p.price}</p>
-
-<button onclick='addToCart("${p.name}",${p.price})'>Add</button>
-
-</div>
-
-</div>`
-
+fashionGrid.innerHTML+=cardHTML(p)
 })
 
 decorProducts.forEach(p=>{
+decorGrid.innerHTML+=cardHTML(p)
+})
 
-decorGrid.innerHTML+=`
+}
+
+function cardHTML(p){
+
+return `
 
 <div class="card">
 
-<img src="${p.img}">
+<div class="wishlist" onclick="toggleWish(event)">♡</div>
+
+<img src="${p.img}" onclick='openPopup("${p.name}",${p.price},"${p.img}")'>
 
 <div class="card-content">
 
@@ -337,47 +328,55 @@ decorGrid.innerHTML+=`
 
 </div>
 
-</div>`
+</div>
 
-})
+`
 
 }
 
 loadProducts()
 
 
-function searchProducts(q,cat){
+function toggleWish(e){
 
-q=q.toLowerCase()
+e.target.innerText = e.target.innerText=="♡" ? "♥" : "♡"
 
-let list=cat=="fashion"?fashionProducts:decorProducts
-let grid=cat=="fashion"?fashionGrid:decorGrid
+}
 
-grid.innerHTML=""
 
-list.filter(p=>p.name.toLowerCase().includes(q))
+function openPopup(name,price,img){
 
-.forEach(p=>{
+overlay.classList.add("active")
 
-grid.innerHTML+=`
+productPopup.classList.add("active")
 
-<div class="card">
+popupImg.src=img
+popupName.innerText=name
+popupPrice.innerText="₹"+price
 
-<img src="${p.img}">
+popupCartBtn.onclick=function(){
+addToCart(name,price)
+}
 
-<div class="card-content">
+}
 
-<h3>${p.name}</h3>
 
-<p class="price">₹${p.price}</p>
+function closeAll(){
 
-<button onclick='addToCart("${p.name}",${p.price})'>Add</button>
+cartBox.classList.remove("active")
 
-</div>
+productPopup.classList.remove("active")
 
-</div>`
+overlay.classList.remove("active")
 
-})
+}
+
+
+function toggleCart(){
+
+overlay.classList.toggle("active")
+
+cartBox.classList.toggle("active")
 
 }
 
@@ -402,17 +401,14 @@ else cart.push({name,price,qty:1})
 
 saveCart(cart)
 
-toggleCart()
-
 }
+
 
 function updateCart(){
 
 let cart=getCart()
 
-let items=document.getElementById("cartItems")
-
-items.innerHTML=""
+cartItems.innerHTML=""
 
 let total=0
 let count=0
@@ -422,9 +418,9 @@ cart.forEach((i,index)=>{
 total+=i.price*i.qty
 count+=i.qty
 
-items.innerHTML+=`
+cartItems.innerHTML+=`
 
-<div class="cart-item">
+<div>
 
 <p>${i.name}</p>
 
@@ -432,11 +428,13 @@ items.innerHTML+=`
 
 <button onclick="removeItem(${index})">Remove</button>
 
-</div>`
+</div>
+
+`
 
 })
 
-cartTotal.innerText="Total: ₹"+total
+cartTotal.innerText="Total ₹"+total
 cartCount.innerText=count
 
 }
@@ -451,28 +449,13 @@ saveCart(cart)
 
 }
 
-
-function toggleCart(){
-
-cartBox.classList.toggle("active")
-overlay.classList.toggle("active")
-
-}
-
-function closeCart(){
-
-cartBox.classList.remove("active")
-overlay.classList.remove("active")
-
-}
+updateCart()
 
 document.addEventListener("keydown",e=>{
 
-if(e.key==="Escape") closeCart()
+if(e.key==="Escape") closeAll()
 
 })
-
-updateCart()
 
 </script>
 
