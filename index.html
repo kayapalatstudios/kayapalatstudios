@@ -13,11 +13,10 @@
             --primary: #3A2E28; 
             --accent: #C86B47; 
             --accent-light: #E8A88B;
-            --bg: #F4EFE6; /* Ivory White / Earthy */
+            --bg: #F4EFE6; 
             --card-bg: #FCF9F2;
             --text-muted: #6B5E55;
             --white: #ffffff;
-            --gold: #D4AF37;
             --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
@@ -30,33 +29,15 @@
             overflow-x: hidden;
         }
 
-        /* --- 🌟 Cinematic Preloader --- */
+        /* --- Preloader --- */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: #050505; /* Pitch Black Start */
+            background: var(--bg); color: var(--accent);
             display: flex; justify-content: center; align-items: center;
-            z-index: 9999; 
-            transition: background 1.5s var(--ease), opacity 0.8s var(--ease), visibility 0.8s;
+            z-index: 9999; transition: opacity 0.8s var(--ease), visibility 0.8s;
         }
-        
-        /* Transition class added via JS */
-        #preloader.phase-ivory { background: var(--bg); }
-
-        .loader-text { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 42px; 
-            font-style: italic; 
-            letter-spacing: 6px; 
-            opacity: 0; /* Starts invisible */
-            animation: goldenReveal 3s var(--ease) forwards;
-        }
-
-        @keyframes goldenReveal {
-            0% { opacity: 0; color: var(--gold); text-shadow: 0 0 0 rgba(212, 175, 55, 0); transform: scale(0.95); }
-            40% { opacity: 1; color: var(--gold); text-shadow: 0 0 30px rgba(212, 175, 55, 0.8); transform: scale(1.02); }
-            70% { opacity: 1; color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); transform: scale(1); }
-            100% { opacity: 1; color: var(--primary); text-shadow: none; transform: scale(1); }
-        }
+        .loader-text { font-family: 'Playfair Display', serif; font-size: 38px; font-style: italic; letter-spacing: 4px; animation: float 2s ease-in-out infinite alternate; }
+        @keyframes float { from { transform: translateY(5px); } to { transform: translateY(-5px); } }
 
         /* --- Infinite Marquee --- */
         .marquee-container {
@@ -389,20 +370,11 @@
     </footer>
 
     <script>
-        // 🌟 Cinematic Preloader Timing Logic
         window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            
-            // Phase 1: Text turns earthy, background shifts to Ivory White
             setTimeout(() => {
-                preloader.classList.add('phase-ivory');
-            }, 2000); // 2 seconds delay
-
-            // Phase 2: Entire preloader fades out, revealing the website
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                preloader.style.visibility = 'hidden';
-            }, 3500); // Total animation time 3.5 seconds
+                document.getElementById('preloader').style.opacity = '0';
+                document.getElementById('preloader').style.visibility = 'hidden';
+            }, 1000);
         });
 
         window.addEventListener('scroll', () => {
@@ -416,6 +388,7 @@
             document.querySelector('.hamburger').classList.toggle('open');
         }
 
+        // Updated Data based on new categories
         let fashionProducts = [
             { id: 'f1', name: "Rust Block-Print Kurta", price: 4500, category: "Tops & Tunics", img: "https://images.unsplash.com/photo-1583391733958-62507873307b?w=800", hoverImg: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=800" },
             { id: 'f2', name: "Indigo Tie-Dye Dress", price: 5200, category: "Dresses & Kaftans", img: "https://images.unsplash.com/photo-1596455607563-ad6193f76b62?w=800", hoverImg: "https://images.unsplash.com/photo-1515347619362-73a11641e411?w=800" },
