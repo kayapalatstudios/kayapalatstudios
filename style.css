@@ -1,26 +1,54 @@
 :root {
-    --primary: #3A2E28; --accent: #C86B47; --accent-light: #E8A88B;
-    --bg: #F4EFE6; --card-bg: #FCF9F2; --text-muted: #6B5E55;
-    --white: #ffffff; --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --primary: #3A2E28; 
+    --accent: #C86B47; 
+    --accent-light: #E8A88B;
+    --bg: #F4EFE6; /* Ivory White / Earthy */
+    --card-bg: #FCF9F2;
+    --text-muted: #6B5E55;
+    --white: #ffffff;
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--primary); overflow-x: hidden; }
 
-/* --- Cinematic Video Preloader --- */
-#preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #050505; display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.8s var(--ease), visibility 0.8s; }
-#introVideo { width: 100%; height: 100%; object-fit: contain; background: #050505; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--primary);
+    overflow-x: hidden;
+}
+
+/* --- ✨ Cinematic Video Preloader (UPDATED FIX) ✨ --- */
+#preloader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    background: var(--bg); /* Black hata kar website ka color kar diya */
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; transition: opacity 0.8s var(--ease), visibility 0.8s;
+}
+#introVideo {
+    width: 100%; height: 100%; 
+    object-fit: contain; 
+    background: transparent; /* Black borders removed */
+}
 
 /* --- Infinite Marquee --- */
-.marquee-container { background: var(--primary); color: var(--bg); padding: 10px 0; overflow: hidden; position: relative; white-space: nowrap; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+.marquee-container {
+    background: var(--primary); color: var(--bg); padding: 10px 0; overflow: hidden; position: relative;
+    white-space: nowrap; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+}
 .marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* --- Header & Navigation --- */
-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(244, 239, 230, 0.9); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(58, 46, 40, 0.1); transition: all 0.4s ease; }
+header {
+    display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
+    background: rgba(244, 239, 230, 0.9); backdrop-filter: blur(10px); position: sticky;
+    top: 0; z-index: 1000; border-bottom: 1px solid rgba(58, 46, 40, 0.1); transition: all 0.4s ease;
+}
 header.scrolled { padding: 10px 5%; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
 
-/* ✨ LOGO SIZE INCREASED HERE ✨ */
-.site-logo { max-height: 80px; cursor: pointer; transition: transform 0.3s; }
+/* --- ✨ LOGO SIZE INCREASED (Desktop) ✨ --- */
+.site-logo { max-height: 110px; cursor: pointer; transition: transform 0.3s; }
 .site-logo:hover { transform: scale(1.02); }
 
 nav { display: flex; gap: 35px; align-items: center; }
@@ -29,9 +57,11 @@ nav a { cursor: pointer; font-size: 14px; text-transform: uppercase; letter-spac
 nav a:hover, nav a.active-link { color: var(--accent); }
 nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--accent); transition: width 0.3s var(--ease); }
 nav a:hover::after, nav a.active-link::after { width: 100%; }
+
 .header-actions { display: flex; align-items: center; gap: 25px; }
 .cart-icon { font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: color 0.3s; }
 .cart-icon:hover { color: var(--accent); }
+
 .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
 .hamburger span { width: 30px; height: 2px; background: var(--primary); transition: 0.4s var(--ease); }
 
@@ -58,6 +88,7 @@ nav a:hover::after, nav a.active-link::after { width: 100%; }
 .category-bar::-webkit-scrollbar { display: none; }
 .cat-btn { padding: 10px 24px; background: transparent; border: 1px solid rgba(58, 46, 40, 0.3); border-radius: 30px; color: var(--primary); font-family: 'Outfit'; font-size: 14px; white-space: nowrap; cursor: pointer; transition: 0.3s; }
 .cat-btn:hover, .cat-btn.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
 .card { cursor: pointer; background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: transform 0.4s var(--ease); }
 .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(200, 107, 71, 0.1); }
@@ -70,7 +101,7 @@ nav a:hover::after, nav a.active-link::after { width: 100%; }
 .card-content h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 500; margin-bottom: 8px; color: var(--primary); }
 .price { color: var(--accent); font-size: 16px; font-weight: 500; }
 
-/* --- Popup & Cart --- */
+/* --- Popup Modal --- */
 .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(58, 46, 40, 0.7); backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: 0.4s; z-index: 1000; }
 .overlay.active { opacity: 1; pointer-events: auto; }
 .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%); background: var(--card-bg); width: 95%; max-width: 900px; height: 80vh; display: flex; opacity: 0; pointer-events: none; transition: 0.5s var(--ease); z-index: 1002; box-shadow: 0 30px 60px rgba(0,0,0,0.2); border-radius: 20px; overflow: hidden; }
@@ -87,6 +118,8 @@ nav a:hover::after, nav a.active-link::after { width: 100%; }
 .popup-desc { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 40px; white-space: pre-wrap; }
 .add-to-cart-sticky { margin-top: auto; width: 100%; padding: 18px; background: var(--primary); color: var(--bg); border: none; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; border-radius: 30px; }
 .add-to-cart-sticky:hover { background: var(--accent); }
+
+/* --- Sidebar Cart --- */
 .cart { position: fixed; right: -450px; top: 0; width: 100%; max-width: 450px; height: 100vh; background: var(--card-bg); box-shadow: -10px 0 30px rgba(0,0,0,0.1); padding: 40px; transition: right 0.5s var(--ease); z-index: 1001; display: flex; flex-direction: column; }
 .cart.active { right: 0; }
 .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px dashed rgba(58,46,40,0.2); padding-bottom: 20px; }
@@ -99,7 +132,11 @@ nav a:hover::after, nav a.active-link::after { width: 100%; }
 footer { background: var(--primary); color: var(--bg); padding: 80px 5% 40px; margin-top: 80px; text-align: center; border-radius: 40px 40px 0 0; }
 .footer-logo-img { max-height: 100px; margin-bottom: 20px; filter: brightness(0) invert(1); opacity: 0.8; }
 
+/* --- ✨ MOBILE SPECIFIC FIXES ✨ --- */
 @media (max-width: 768px) {
+    /* Mobile me intro video ko screen cover karne diya taaki reel jaisa dikhe */
+    #introVideo { object-fit: cover; } 
+
     .hamburger { display: flex; }
     nav { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg); flex-direction: column; justify-content: center; opacity: 0; pointer-events: none; transition: 0.5s var(--ease); z-index: 1001; }
     nav.open { opacity: 1; pointer-events: auto; }
@@ -107,7 +144,7 @@ footer { background: var(--primary); color: var(--bg); padding: 80px 5% 40px; ma
     nav a { font-size: 28px; font-family: 'Playfair Display', serif; margin: 15px 0; font-style: italic; }
     
     /* ✨ MOBILE LOGO SIZE INCREASED ✨ */
-    .site-logo { max-height: 55px; }
+    .site-logo { max-height: 75px; }
     
     .hero { border-radius: 0 0 25px 25px; }
     .hero h1 { font-size: 45px; }
