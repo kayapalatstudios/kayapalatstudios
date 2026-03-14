@@ -1,5 +1,6 @@
-// --- 1. SETTINGS SHEET URL (Abhi empty rakha hai) ---
-const SETTINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=575328564&single=true&output=csv" 
+// --- 1. SETTINGS SHEET URL ---
+// 👇 YAHAN APNA 'Kayapalat - Settings' WALA CSV LINK DAALEIN 👇
+const SETTINGS_URL = ""; 
 
 // --- 2. EXISTING PRODUCT SHEETS ---
 const FASHION_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=0&single=true&output=csv";
@@ -11,14 +12,18 @@ let siteSettings = {};
 
 // Video Preloader Logic
 const introVideo = document.getElementById('introVideo');
-introVideo.onended = () => { hidePreloader(); };
-introVideo.onerror = () => { hidePreloader(); };
-setTimeout(() => { if(document.getElementById('preloader').style.opacity !== '0') hidePreloader(); }, 8000);
+if(introVideo) {
+    introVideo.onended = () => { hidePreloader(); };
+    introVideo.onerror = () => { hidePreloader(); };
+}
+setTimeout(() => { if(document.getElementById('preloader') && document.getElementById('preloader').style.opacity !== '0') hidePreloader(); }, 8000);
 
 function hidePreloader() {
     const preloader = document.getElementById('preloader');
-    preloader.style.opacity = '0';
-    setTimeout(() => { preloader.style.visibility = 'hidden'; }, 800);
+    if(preloader) {
+        preloader.style.opacity = '0';
+        setTimeout(() => { preloader.style.visibility = 'hidden'; }, 800);
+    }
 }
 
 async function fetchData(url, type) {
@@ -74,23 +79,14 @@ function parseProductsCSV(str) {
     return result;
 }
 
+// ✨ UPDATED: Ab Logo aur Video html me hain, toh sheet se sirf Hero aur Marquee aayenge ✨
 function applySiteSettings() {
-    if(siteSettings['LOGO_IMAGE']) {
-        document.getElementById('headerLogo').src = siteSettings['LOGO_IMAGE'];
-        document.getElementById('footerLogo').src = siteSettings['LOGO_IMAGE'];
-    }
     if(siteSettings['HERO_IMAGE']) {
         document.getElementById('dynamicHeroBg').style.backgroundImage = `url('${siteSettings['HERO_IMAGE']}')`;
     }
     if(siteSettings['MARQUEE_TEXT']) {
         const mText = siteSettings['MARQUEE_TEXT'] + ' &nbsp; ✨ &nbsp; ';
         document.getElementById('dynamicMarquee').innerHTML = mText.repeat(5);
-    }
-    if(siteSettings['INTRO_VIDEO']) {
-        document.getElementById('videoSource').src = siteSettings['INTRO_VIDEO'];
-        introVideo.load();
-    } else {
-        hidePreloader();
     }
 }
 
