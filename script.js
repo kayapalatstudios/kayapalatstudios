@@ -1,6 +1,6 @@
 // --- 1. SETTINGS SHEET URL ---
 // 👇 YAHAN APNA 'Kayapalat - Settings' WALA CSV LINK DAALEIN 👇
-const SETTINGS_URL = ""; 
+const SETTINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=575328564&single=true&output=csv" 
 
 // --- 2. EXISTING PRODUCT SHEETS ---
 const FASHION_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=0&single=true&output=csv";
