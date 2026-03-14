@@ -18,17 +18,17 @@ body {
     overflow-x: hidden;
 }
 
-/* --- ✨ Cinematic Video Preloader (UPDATED FIX) ✨ --- */
+/* --- ✨ Cinematic Video Preloader ✨ --- */
 #preloader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background: var(--bg); /* Black hata kar website ka color kar diya */
+    background: var(--bg); 
     display: flex; justify-content: center; align-items: center;
     z-index: 9999; transition: opacity 0.8s var(--ease), visibility 0.8s;
 }
 #introVideo {
     width: 100%; height: 100%; 
     object-fit: contain; 
-    background: transparent; /* Black borders removed */
+    background: transparent; 
 }
 
 /* --- Infinite Marquee --- */
@@ -47,7 +47,6 @@ header {
 }
 header.scrolled { padding: 10px 5%; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
 
-/* --- ✨ LOGO SIZE INCREASED (Desktop) ✨ --- */
 .site-logo { max-height: 110px; cursor: pointer; transition: transform 0.3s; }
 .site-logo:hover { transform: scale(1.02); }
 
@@ -94,9 +93,12 @@ nav a:hover::after, nav a.active-link::after { width: 100%; }
 .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(200, 107, 71, 0.1); }
 .img-container { position: relative; overflow: hidden; aspect-ratio: 4/5; background: #EAE6DF; }
 .card img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s var(--ease), transform 2s var(--ease); position: absolute; top: 0; left: 0; }
-.card .img-hover { opacity: 0; }
-.card:hover .img-main { opacity: 0; }
+
+/* ✨ YE RAHA FIX ✨ */
+.card .img-hover { opacity: 0; z-index: 2; }
+.card:hover .img-main { transform: scale(1.05); } /* Ab main photo hide nahi hogi, sirf zoom hogi */
 .card:hover .img-hover { opacity: 1; transform: scale(1.05); }
+
 .card-content { padding: 25px 20px; text-align: center; }
 .card-content h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 500; margin-bottom: 8px; color: var(--primary); }
 .price { color: var(--accent); font-size: 16px; font-weight: 500; }
@@ -132,20 +134,14 @@ nav a:hover::after, nav a.active-link::after { width: 100%; }
 footer { background: var(--primary); color: var(--bg); padding: 80px 5% 40px; margin-top: 80px; text-align: center; border-radius: 40px 40px 0 0; }
 .footer-logo-img { max-height: 100px; margin-bottom: 20px; filter: brightness(0) invert(1); opacity: 0.8; }
 
-/* --- ✨ MOBILE SPECIFIC FIXES ✨ --- */
 @media (max-width: 768px) {
-    /* Mobile me intro video ko screen cover karne diya taaki reel jaisa dikhe */
     #introVideo { object-fit: cover; } 
-
     .hamburger { display: flex; }
     nav { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg); flex-direction: column; justify-content: center; opacity: 0; pointer-events: none; transition: 0.5s var(--ease); z-index: 1001; }
     nav.open { opacity: 1; pointer-events: auto; }
     .close-menu { display: block; position: absolute; top: 30px; right: 30px; font-size: 40px; color: var(--primary); cursor: pointer; }
     nav a { font-size: 28px; font-family: 'Playfair Display', serif; margin: 15px 0; font-style: italic; }
-    
-    /* ✨ MOBILE LOGO SIZE INCREASED ✨ */
     .site-logo { max-height: 75px; }
-    
     .hero { border-radius: 0 0 25px 25px; }
     .hero h1 { font-size: 45px; }
     .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
