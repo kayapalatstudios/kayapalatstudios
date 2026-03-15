@@ -118,14 +118,14 @@ footer { background: var(--primary); color: var(--bg); padding: 60px 5% 40px; ma
 .social-icons { display: flex; gap: 15px; justify-content: center; }
 .social-box { 
     display: flex; align-items: center; justify-content: center;
-    width: 45px; height: 45px; 
+    width: 38px; height: 38px; 
     background-color: #1a1a1a; /* Dark black background */
     color: #ffffff; /* White icon */
     border-radius: 12px; /* Rounded corners just like your image */
     text-decoration: none; 
     transition: transform 0.3s, background-color 0.3s; 
 }
-.social-box svg { width: 22px; height: 22px; }
+.social-box svg { width: 18px; height: 18px; }
 .social-box:hover { transform: translateY(-3px); background-color: var(--accent); }
 
 @media (max-width: 768px) {
