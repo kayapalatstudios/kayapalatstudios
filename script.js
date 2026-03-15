@@ -10,74 +10,78 @@ let fashionProducts = [];
 let furnishingsProducts = [];
 let siteSettings = {};
 
-// --- 3. ADVANCED CINEMATIC PRELOADER WITH LOGO TRANSITION ---
+// --- 3. ADVANCED MAGICAL PRELOADER ---
 const introVideo = document.getElementById('introVideo');
-let preloaderHidden = false; 
+let preloaderTriggered = false; 
 
 if(introVideo) {
-    // Jab video khatam ho jaye
-    introVideo.onended = () => {
-        if(preloaderHidden) return;
-        
-        // ✨ Video ko 2 Second (2000ms) tak display par freeze rakhein
-        setTimeout(() => {
-            animateToLogo();
-        }, 2000); 
-    };
+    // ✨ FIX: Video khatam hone se theek 0.1s pehle pause kar do taaki Black Screen na aaye
+    introVideo.addEventListener('timeupdate', () => {
+        if (introVideo.duration && introVideo.currentTime >= introVideo.duration - 0.1) {
+            if(!preloaderTriggered) {
+                preloaderTriggered = true;
+                introVideo.pause(); // Video yahin freeze ho jayegi
+                
+                // 2 second ka freeze time
+                setTimeout(() => {
+                    animateToLogo();
+                }, 2000); 
+            }
+        }
+    });
     introVideo.onerror = () => { hidePreloader(); };
 }
 
-// Fallback: Agar kisi wajah se video delay ho, toh 15 sec baad direct khol de
+// Fallback: Agar video na chale
 setTimeout(() => { 
-    if(!preloaderHidden && document.getElementById('preloader')) hidePreloader(); 
+    if(!preloaderTriggered && document.getElementById('preloader')) hidePreloader(); 
 }, 15000);
 
+
 function animateToLogo() {
-    preloaderHidden = true;
+    preloaderTriggered = true;
     const preloader = document.getElementById('preloader');
     const video = document.getElementById('introVideo');
     const logo = document.getElementById('headerLogo');
 
     if(preloader && video && logo) {
-        // ✨ Website kholne aur Logo ki exact position nikalne ka logic
         const logoRect = logo.getBoundingClientRect();
         
-        // Calculate karna ki video ko hawa mein udte hue kitna left/top jaana hai
+        // Coordinates and Scale
         const moveX = logoRect.left + (logoRect.width / 2) - (window.innerWidth / 2);
         const moveY = logoRect.top + (logoRect.height / 2) - (window.innerHeight / 2);
-        
-        // Video ka size logo ke size jitna chota (shrink) karna
         const scaleSize = logoRect.width / window.innerWidth;
 
-        // ✨ The Magic Transition (Udte hue logo me jana)
-        video.style.transition = 'all 1.2s cubic-bezier(0.25, 1, 0.5, 1)'; 
-        video.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scaleSize})`;
-        video.style.opacity = '0'; // Logo mein ghuste hi fade out ho jayegi
-
-        // Background ko beige se transparent karna taaki website piche se dikhne lage
-        preloader.style.transition = 'background-color 1s ease';
+        // Background turant clear karo taaki website dikhe
         preloader.style.backgroundColor = 'transparent'; 
 
-        // 1.2 second baad jab animation poora ho jaye, toh dibbe ko hata do
+        // ✨ THE MAGICAL ANIMATION ✨
+        // 1.5s ka smooth flight aur end mein ja kar fade out hona
+        video.style.transition = 'transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease 1.2s, border-radius 1.5s ease, filter 1.5s ease'; 
+        
+        // Udte time video thodi round hogi aur chamkegi (Glow effect)
+        video.style.borderRadius = '30%'; 
+        video.style.filter = 'drop-shadow(0px 0px 25px rgba(200, 107, 71, 0.8))'; 
+        
+        // Logo ki taraf fly karna with slight magical tilt (5deg)
+        video.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scaleSize}) rotate(5deg)`;
+        video.style.opacity = '0'; // Ye 1.2s delay ke baad hi apply hoga, pehle nahi
+
+        // Animation khatam hone par safai
         setTimeout(() => {
-            preloader.style.visibility = 'hidden';
-            preloader.style.opacity = '0';
             preloader.style.display = 'none';
-        }, 1200);
+        }, 1500);
     } else {
-        hidePreloader(); // Agar logo na mile toh normal tareeqe se khol do
+        hidePreloader(); 
     }
 }
 
 function hidePreloader() {
-    preloaderHidden = true;
+    preloaderTriggered = true;
     const preloader = document.getElementById('preloader');
     if(preloader) {
         preloader.style.opacity = '0';
-        setTimeout(() => { 
-            preloader.style.visibility = 'hidden'; 
-            preloader.style.display = 'none'; 
-        }, 800);
+        setTimeout(() => { preloader.style.display = 'none'; }, 800);
     }
 }
 
