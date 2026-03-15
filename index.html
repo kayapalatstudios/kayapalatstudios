@@ -9,9 +9,17 @@
 </head>
 <body>
     <div id="preloader">
-        <video id="introVideo" autoplay muted playsinline>
-            <source src="https://kayapalatstudios.github.io/kayapalatstudios/intro-video.mp4" type="video/mp4">
-        </video>
+        <video id="introVideo" autoplay muted playsinline></video>
+        <script>
+            const videoElement = document.getElementById('introVideo');
+            if(window.innerWidth <= 768) {
+                // Mobile Video Link
+                videoElement.innerHTML = '<source src="https://kayapalatstudios.github.io/kayapalatstudios/intro-video-mobile.mp4" type="video/mp4">';
+            } else {
+                // Laptop Video Link
+                videoElement.innerHTML = '<source src="https://kayapalatstudios.github.io/kayapalatstudios/intro-video.mp4" type="video/mp4">';
+            }
+        </script>
     </div>
 
     <div class="marquee-container">
@@ -27,6 +35,8 @@
             <a onclick="openPage('home')" class="active-link" data-target="home">Home</a>
             <a onclick="openPage('fashion')" data-target="fashion">Fashion</a>
             <a onclick="openPage('furnishings')" data-target="furnishings">Furnishings</a>
+            <a onclick="openPage('about')" data-target="about">About Us</a>
+            <a onclick="openPage('contact')" data-target="contact">Contact Us</a>
         </nav>
         <div class="header-actions">
             <a onclick="toggleCart()" class="cart-icon">Bag <span id="cartCount">(0)</span></a>
@@ -42,8 +52,8 @@
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1>Makeover Allover</h1>
-                <p>Earthy, Handcrafted & Unapologetically You</p>
-                <button class="btn-luxury" onclick="openPage('furnishings')">Explore Furnishings</button>
+                <p>Fashion & Furnishings</p>
+                <button class="btn-luxury" onclick="openPage('furnishings')">Explore Our Designs</button>
             </div>
         </section>
         <div style="padding: 60px 5%; max-width: 1500px; margin: auto;">
@@ -90,6 +100,31 @@
         <div class="grid" id="furnishingsGrid"></div>
     </div>
 
+    <div id="about" class="page">
+        <div class="section-header" style="justify-content: center; text-align: center; border-bottom: none;">
+            <h2 class="page-title">Our Story</h2>
+        </div>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8; color: var(--text-muted); font-size: 16px; background: var(--card-bg); padding: 50px 30px; border-radius: 20px;">
+            <p style="margin-bottom: 20px;">Welcome to <strong>KAYAPALAT</strong>. We believe in the beauty of imperfections and the charm of handcrafted artistry.</p>
+            <p>Every piece in our collection is thoughtfully curated and deeply rooted in Indian tradition, yet designed for the modern free spirit. From stunning bohemian fashion to earthy indigenous furnishings, our journey is dedicated to bringing authentic, soul-touching designs straight to your home.</p>
+        </div>
+    </div>
+
+    <div id="contact" class="page">
+        <div class="section-header" style="justify-content: center; text-align: center; border-bottom: none;">
+            <h2 class="page-title">Get In Touch</h2>
+        </div>
+        <div style="max-width: 500px; margin: 0 auto; text-align: center; background: var(--card-bg); padding: 50px 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
+            <p style="margin-bottom: 35px; color: var(--text-muted);">Have a question or just want to say hi? Reach out to us!</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                <a href="mailto:contact@kayapalat.com" class="social-btn email-btn">✉️ Email Us</a>
+                <a href="https://instagram.com/kayapalat" target="_blank" class="social-btn insta-btn">📸 Instagram</a>
+                <a href="https://facebook.com/kayapalat" target="_blank" class="social-btn fb-btn">📘 Facebook</a>
+            </div>
+        </div>
+    </div>
+
     <div class="popup" id="productPopup">
         <span class="close-popup" onclick="closeAll()">&times;</span>
         <div class="popup-img-wrap"><img id="popupImg" src="" alt="Product"></div>
@@ -117,9 +152,9 @@
 
     <footer>
         <img id="footerLogo" class="footer-logo-img" src="https://kayapalatstudios.github.io/kayapalatstudios/logo.png" alt="KAYAPALAT">
-        <p style="color: var(--accent-light); font-size: 14px; letter-spacing: 1px;">Makeover Allover. Rooted in tradition, designed for today.</p>
-        <div style="margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; font-size: 13px; color: #999;">
-            &copy; <script>document.write(new Date().getFullYear())</script> Kayapalat. Handcrafted with love.
+        <p style="color: var(--accent-light); font-size: 15px; letter-spacing: 2px; text-transform: uppercase;">Makeover Allover</p>
+        <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; font-size: 13px; color: #999;">
+            &copy; 2015 Kayapalat. Handcrafted with love.
         </div>
     </footer>
 
