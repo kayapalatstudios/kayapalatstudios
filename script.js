@@ -10,21 +10,21 @@ let fashionProducts = [];
 let furnishingsProducts = [];
 let siteSettings = {};
 
-// --- 3. ADVANCED MAGICAL PRELOADER ---
+// --- 3. CLEAN PRELOADER WITH FREEZE HACK ---
 const introVideo = document.getElementById('introVideo');
 let preloaderTriggered = false; 
 
 if(introVideo) {
-    // ✨ FIX: Video khatam hone se theek 0.1s pehle pause kar do taaki Black Screen na aaye
+    // ✨ FREEZE HACK: Video khatam hone se 0.1s pehle pause karega (No Black Screen)
     introVideo.addEventListener('timeupdate', () => {
         if (introVideo.duration && introVideo.currentTime >= introVideo.duration - 0.1) {
             if(!preloaderTriggered) {
                 preloaderTriggered = true;
-                introVideo.pause(); // Video yahin freeze ho jayegi
+                introVideo.pause(); // Video yahin aakhiri frame par freeze ho jayegi
                 
-                // 2 second ka freeze time
+                // 2 second (2000ms) tak freeze rakhne ke baad normally fade out karega
                 setTimeout(() => {
-                    animateToLogo();
+                    hidePreloader();
                 }, 2000); 
             }
         }
@@ -32,56 +32,21 @@ if(introVideo) {
     introVideo.onerror = () => { hidePreloader(); };
 }
 
-// Fallback: Agar video na chale
+// Fallback: Agar video na chale (Network issue) toh 15 sec baad hata dega
 setTimeout(() => { 
     if(!preloaderTriggered && document.getElementById('preloader')) hidePreloader(); 
 }, 15000);
 
-
-function animateToLogo() {
-    preloaderTriggered = true;
-    const preloader = document.getElementById('preloader');
-    const video = document.getElementById('introVideo');
-    const logo = document.getElementById('headerLogo');
-
-    if(preloader && video && logo) {
-        const logoRect = logo.getBoundingClientRect();
-        
-        // Coordinates and Scale
-        const moveX = logoRect.left + (logoRect.width / 2) - (window.innerWidth / 2);
-        const moveY = logoRect.top + (logoRect.height / 2) - (window.innerHeight / 2);
-        const scaleSize = logoRect.width / window.innerWidth;
-
-        // Background turant clear karo taaki website dikhe
-        preloader.style.backgroundColor = 'transparent'; 
-
-        // ✨ THE MAGICAL ANIMATION ✨
-        // 1.5s ka smooth flight aur end mein ja kar fade out hona
-        video.style.transition = 'transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease 1.2s, border-radius 1.5s ease, filter 1.5s ease'; 
-        
-        // Udte time video thodi round hogi aur chamkegi (Glow effect)
-        video.style.borderRadius = '30%'; 
-        video.style.filter = 'drop-shadow(0px 0px 25px rgba(200, 107, 71, 0.8))'; 
-        
-        // Logo ki taraf fly karna with slight magical tilt (5deg)
-        video.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scaleSize}) rotate(5deg)`;
-        video.style.opacity = '0'; // Ye 1.2s delay ke baad hi apply hoga, pehle nahi
-
-        // Animation khatam hone par safai
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 1500);
-    } else {
-        hidePreloader(); 
-    }
-}
-
+// Simple Fade Out Function
 function hidePreloader() {
     preloaderTriggered = true;
     const preloader = document.getElementById('preloader');
     if(preloader) {
-        preloader.style.opacity = '0';
-        setTimeout(() => { preloader.style.display = 'none'; }, 800);
+        preloader.style.opacity = '0'; // Smoothly fade out hoga
+        setTimeout(() => { 
+            preloader.style.visibility = 'hidden'; 
+            preloader.style.display = 'none'; 
+        }, 800);
     }
 }
 
