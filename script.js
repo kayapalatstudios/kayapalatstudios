@@ -1,6 +1,6 @@
 // --- 1. SETTINGS SHEET URL ---
 // 👇 YAHAN APNA 'Kayapalat - Settings' WALA CSV LINK DAALEIN 👇
-const SETTINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=575328564&single=true&output=csv" 
+const SETTINGS_URL = ""; 
 
 // --- 2. EXISTING PRODUCT SHEETS ---
 const FASHION_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_Kg5XqFgNVxYoH3SP0BazuL8R22pYdDv0FJ0XZomAFEeuTKCdVKxAkgV8_8D7MjpguNAbYb8vN8ga/pub?gid=0&single=true&output=csv";
@@ -10,21 +10,78 @@ let fashionProducts = [];
 let furnishingsProducts = [];
 let siteSettings = {};
 
-// Video Preloader Logic
+// --- 3. ADVANCED CINEMATIC PRELOADER WITH LOGO TRANSITION ---
 const introVideo = document.getElementById('introVideo');
+let preloaderHidden = false; 
+
 if(introVideo) {
-    introVideo.onended = () => { hidePreloader(); };
+    // Jab video khatam ho jaye
+    introVideo.onended = () => {
+        if(preloaderHidden) return;
+        
+        // ✨ Video ko 2 Second (2000ms) tak display par freeze rakhein
+        setTimeout(() => {
+            animateToLogo();
+        }, 2000); 
+    };
     introVideo.onerror = () => { hidePreloader(); };
 }
-setTimeout(() => { if(document.getElementById('preloader') && document.getElementById('preloader').style.opacity !== '0') hidePreloader(); }, 8000);
+
+// Fallback: Agar kisi wajah se video delay ho, toh 15 sec baad direct khol de
+setTimeout(() => { 
+    if(!preloaderHidden && document.getElementById('preloader')) hidePreloader(); 
+}, 15000);
+
+function animateToLogo() {
+    preloaderHidden = true;
+    const preloader = document.getElementById('preloader');
+    const video = document.getElementById('introVideo');
+    const logo = document.getElementById('headerLogo');
+
+    if(preloader && video && logo) {
+        // ✨ Website kholne aur Logo ki exact position nikalne ka logic
+        const logoRect = logo.getBoundingClientRect();
+        
+        // Calculate karna ki video ko hawa mein udte hue kitna left/top jaana hai
+        const moveX = logoRect.left + (logoRect.width / 2) - (window.innerWidth / 2);
+        const moveY = logoRect.top + (logoRect.height / 2) - (window.innerHeight / 2);
+        
+        // Video ka size logo ke size jitna chota (shrink) karna
+        const scaleSize = logoRect.width / window.innerWidth;
+
+        // ✨ The Magic Transition (Udte hue logo me jana)
+        video.style.transition = 'all 1.2s cubic-bezier(0.25, 1, 0.5, 1)'; 
+        video.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scaleSize})`;
+        video.style.opacity = '0'; // Logo mein ghuste hi fade out ho jayegi
+
+        // Background ko beige se transparent karna taaki website piche se dikhne lage
+        preloader.style.transition = 'background-color 1s ease';
+        preloader.style.backgroundColor = 'transparent'; 
+
+        // 1.2 second baad jab animation poora ho jaye, toh dibbe ko hata do
+        setTimeout(() => {
+            preloader.style.visibility = 'hidden';
+            preloader.style.opacity = '0';
+            preloader.style.display = 'none';
+        }, 1200);
+    } else {
+        hidePreloader(); // Agar logo na mile toh normal tareeqe se khol do
+    }
+}
 
 function hidePreloader() {
+    preloaderHidden = true;
     const preloader = document.getElementById('preloader');
     if(preloader) {
         preloader.style.opacity = '0';
-        setTimeout(() => { preloader.style.visibility = 'hidden'; }, 800);
+        setTimeout(() => { 
+            preloader.style.visibility = 'hidden'; 
+            preloader.style.display = 'none'; 
+        }, 800);
     }
 }
+
+// --- 4. DATA FETCHING & RENDERING LOGIC ---
 
 async function fetchData(url, type) {
     if(!url) return type === 'settings' ? {} : [];
@@ -79,7 +136,6 @@ function parseProductsCSV(str) {
     return result;
 }
 
-// ✨ UPDATED: Ab Logo aur Video html me hain, toh sheet se sirf Hero aur Marquee aayenge ✨
 function applySiteSettings() {
     if(siteSettings['HERO_IMAGE']) {
         document.getElementById('dynamicHeroBg').style.backgroundImage = `url('${siteSettings['HERO_IMAGE']}')`;
