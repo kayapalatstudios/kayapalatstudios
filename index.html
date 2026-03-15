@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAYAPALAT | Earthy & Handcrafted</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,10 +13,8 @@
         <script>
             const videoElement = document.getElementById('introVideo');
             if(window.innerWidth <= 768) {
-                // Mobile Video Link
                 videoElement.innerHTML = '<source src="https://kayapalatstudios.github.io/kayapalatstudios/intro-video-mobile.mp4" type="video/mp4">';
             } else {
-                // Laptop Video Link
                 videoElement.innerHTML = '<source src="https://kayapalatstudios.github.io/kayapalatstudios/intro-video.mp4" type="video/mp4">';
             }
         </script>
@@ -35,8 +33,6 @@
             <a onclick="openPage('home')" class="active-link" data-target="home">Home</a>
             <a onclick="openPage('fashion')" data-target="fashion">Fashion</a>
             <a onclick="openPage('furnishings')" data-target="furnishings">Furnishings</a>
-            <a onclick="openPage('about')" data-target="about">About Us</a>
-            <a onclick="openPage('contact')" data-target="contact">Contact Us</a>
         </nav>
         <div class="header-actions">
             <a onclick="toggleCart()" class="cart-icon">Bag <span id="cartCount">(0)</span></a>
@@ -110,21 +106,6 @@
         </div>
     </div>
 
-    <div id="contact" class="page">
-        <div class="section-header" style="justify-content: center; text-align: center; border-bottom: none;">
-            <h2 class="page-title">Get In Touch</h2>
-        </div>
-        <div style="max-width: 500px; margin: 0 auto; text-align: center; background: var(--card-bg); padding: 50px 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
-            <p style="margin-bottom: 35px; color: var(--text-muted);">Have a question or just want to say hi? Reach out to us!</p>
-            
-            <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
-                <a href="mailto:contact@kayapalat.com" class="social-btn email-btn">✉️ Email Us</a>
-                <a href="https://instagram.com/kayapalat" target="_blank" class="social-btn insta-btn">📸 Instagram</a>
-                <a href="https://facebook.com/kayapalat" target="_blank" class="social-btn fb-btn">📘 Facebook</a>
-            </div>
-        </div>
-    </div>
-
     <div class="popup" id="productPopup">
         <span class="close-popup" onclick="closeAll()">&times;</span>
         <div class="popup-img-wrap"><img id="popupImg" src="" alt="Product"></div>
@@ -152,9 +133,26 @@
 
     <footer>
         <img id="footerLogo" class="footer-logo-img" src="https://kayapalatstudios.github.io/kayapalatstudios/logo.png" alt="KAYAPALAT">
-        <p style="color: var(--accent-light); font-size: 15px; letter-spacing: 2px; text-transform: uppercase;">Makeover Allover</p>
+        <p class="footer-tagline">Makeover Allover</p>
+
+        <div class="footer-links">
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a onclick="openPage('about')">About Us</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <div class="social-icons">
+                    <a href="https://instagram.com/kayapalat" target="_blank" style="color: #E1306C;">📸</a>
+                    <a href="https://facebook.com/kayapalat" target="_blank" style="color: #1877F2;">📘</a>
+                    <a href="mailto:contact@kayapalat.com" style="color: #ffffff;">✉️</a>
+                </div>
+            </div>
+        </div>
+
         <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; font-size: 13px; color: #999;">
-            &copy; 2015 Kayapalat. Handcrafted with love.
+            &copy; 2015 Kayapalat. Made with love.
         </div>
     </footer>
 
